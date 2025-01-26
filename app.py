@@ -18,250 +18,88 @@ load_dotenv()
 # Custom CSS for dark theme and UI modifications
 st.markdown("""
     <style>
-    /* Main background colors - forcing black everywhere */
-    .stApp {
-        background-color: #000000 !important;
-    }
-    
-    .main {
-        background-color: #000000 !important;
-    }
-    
-    [data-testid="stAppViewContainer"] {
-        background-color: #000000 !important;
-    }
-    
-    [data-testid="stHeader"] {
-        background-color: #000000 !important;
-    }
-    
-    [data-testid="stToolbar"] {
-        background-color: #000000 !important;
-    }
-    
-    .stChatFloatingInputContainer {
-        background-color: #000000 !important;
-    }
-    
-    footer {
-        background-color: #000000 !important;
-    }
-    
-    /* Sidebar styling */
-    section[data-testid="stSidebar"] {
-        background-color: #000000 !important;
-    }
-    
-    [data-testid="stSidebarNav"] {
-        background-color: #000000 !important;
-    }
+    /* Previous styles remain the same until the button styling section */
 
-    [data-testid="stSidebar"] input,
-    [data-testid="stSidebar"] .stTextInput > div > div > input {
-        background-color: #1a1a1a !important;
-        color: #ffffff !important;
-        border: 1px solid #333333 !important;
-        border-radius: 4px !important;
-    }
-
-    [data-testid="stSidebar"] .stButton > button {
+    /* Updated Button styling */
+    .stButton > button,
+    button[kind="secondary"],
+    .stButton button,
+    .sidebar .stButton button {
         width: 100% !important;
         background-color: #1a1a1a !important;
         color: #ffffff !important;
         border: 1px solid #333333 !important;
-        min-height: 40px !important;
-    }
-    
-    /* Font colors */
-    .stMarkdown, p, span, div {
-        color: #ffffff !important;
-    }
-    
-    h1, h2, h3 {
-        color: #ffffff !important;
-    }
-    
-    /* Chat container and messages */
-    .stChatContainer {
-        background-color: #000000 !important;
+        padding: 0.75rem 1rem !important;
+        margin: 0.5rem 0 !important;
+        min-height: 46px !important;
+        border-radius: 4px !important;
+        line-height: 1.6 !important;
+        font-size: 14px !important;
     }
 
-    [data-testid="stChatMessageContainer"] {
+    /* Chat input container and bottom area */
+    .stChatFloatingInputContainer,
+    div[data-testid="stChatInputContainer"] {
         background-color: #000000 !important;
-    }
-    
-    .stChatMessage {
-        background-color: #1a1a1a !important;
-    }
-    
-    .stChatMessageContent {
-        background-color: #1a1a1a !important;
-        color: #ffffff !important;
-    }
-    
-    /* Avatar styling with black background and border */
-    .stChatMessage > div:first-child {
-        background-color: black !important;
-        border: 2px solid black !important;
-    }
-
-    .stChatMessage > div:first-child > div {
-        border: 2px solid black !important;
-    }
-    
-    /* Enhanced input field styling with cursor visibility */
-    .stTextInput > div > div > input {
-        background-color: #1a1a1a !important;
-        color: #ffffff !important;
-        border: 1px solid #333333 !important;
-        caret-color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-    }
-    
-    /* Style for password input field in sidebar */
-    input[type="password"] {
-        caret-color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-        color: #ffffff !important;
-    }
-    
-    /* Focus state for input fields */
-    input:focus {
-        outline: none !important;
-        caret-color: #ffffff !important;
-        caret-animation: blink 1s infinite;
-    }
-    
-    /* Selection styling for input fields */
-    input::selection {
-        background-color: rgba(255, 255, 255, 0.2) !important;
-        color: #ffffff !important;
-    }
-    
-    /* Chat input styling */
-    .stChatInputContainer,
-    [data-testid="stChatInput"] {
-        background-color: #000000 !important;
-        border-color: #333333 !important;
+        border: none !important;
         padding: 1rem !important;
         margin: 0 !important;
     }
-    
-    /* Chat input field */
-    .stChatInputContainer textarea,
-    [data-testid="stChatInput"] textarea {
+
+    /* Chat input field and send button container */
+    .stChatInputContainer {
+        background-color: #000000 !important;
+        border-color: #333333 !important;
+    }
+
+    /* Send button in chat */
+    button[data-testid="chat-send-button"],
+    .stChatFloatingInputContainer button {
+        background-color: #1a1a1a !important;
+        border: 1px solid #333333 !important;
+        color: #ffffff !important;
+    }
+
+    /* White space at the bottom */
+    .main .block-container {
+        padding-bottom: 0px !important;
+        margin-bottom: 0px !important;
+    }
+
+    [data-testid="stAppViewBlockContainer"] {
+        padding-bottom: 0px !important;
+        margin-bottom: 0px !important;
+    }
+
+    /* Additional background color enforcement */
+    div[class*="stChatFloatingInputContainer"],
+    div[class*="stChatContainer"],
+    div[class*="stMarkdown"],
+    div[data-testid*="stChatMessageContainer"] {
+        background-color: #000000 !important;
+    }
+
+    /* Chat message input box */
+    textarea[aria-label="Message"] {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
         border: 1px solid #333333 !important;
-        padding: 0.5rem !important;
-        caret-color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-    }
-    
-    textarea {
-        color: #ffffff !important;
-        caret-color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-        opacity: 1 !important;
-    }
-    
-    .stChatInput {
-        color: #ffffff !important;
-    }
-    
-    [data-testid="stChatInput"] {
-        color: #ffffff !important;
-    }
-    
-    /* Enhanced cursor visibility for chat input */
-    [data-testid="stChatInput"] textarea {
-        color: #ffffff !important;
-        caret-color: #ffffff !important;
-    }
-    
-    textarea:focus {
-        outline: none !important;
-        caret-color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-        caret-animation: blink 1s infinite;
-    }
-    
-    textarea::selection {
-        background-color: rgba(255, 255, 255, 0.2) !important;
-        color: #ffffff !important;
-    }
-    
-    /* Cursor blink animation */
-    @keyframes blink {
-        0% { opacity: 1; }
-        50% { opacity: 0; }
-        100% { opacity: 1; }
-    }
-    
-    /* Button styling */
-    .stButton > button {
-        width: 100% !important;
-        background-color: #1a1a1a !important;
-        color: #ffffff !important;
-        border: 1px solid #333333 !important;
-        padding: 0.5rem 1rem !important;
-        margin: 0.5rem 0 !important;
-        height: auto !important;
-        border-radius: 4px !important;
     }
 
-    .stButton > button:hover {
-        background-color: #333333 !important;
-        border-color: #444444 !important;
-    }
-    
-    /* Status indicator styling */
-    .api-status {
-        margin-top: 10px;
-        padding: 10px;
-        border-radius: 4px;
-        background-color: #1a1a1a !important;
-        text-align: center;
-    }
-    
-    /* Error message styling */
-    .stAlert {
-        background-color: #1a1a1a !important;
-        color: #ff4444 !important;
-    }
-    
-    /* Scrollbar styling */
-    ::-webkit-scrollbar {
-        background: #000000 !important;
-        width: 10px;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-        background: #333333 !important;
-        border-radius: 5px;
+    /* Bottom container fixes */
+    .element-container,
+    .stChatFloatingInputContainer,
+    .stMarkdown,
+    div[data-testid="stChatMessageContainer"] {
+        background-color: #000000 !important;
     }
 
-    /* Override any remaining white spaces */
-    div[data-testid="stDecoration"] {
-        background-color: #000000 !important;
+    /* Ensure proper spacing and alignment */
+    .stChatFloatingInputContainer {
+        margin-bottom: 0 !important;
+        padding-bottom: 2rem !important;
     }
-    
-    div[data-testid="stStatusWidget"] {
-        background-color: #000000 !important;
-    }
-    
-    iframe {
-        background-color: #000000 !important;
-    }
-    
-    /* Container background reinforcement */
-    [data-testid="stAppViewContainer"],
-    [data-testid="stChatContainer"],
-    .main,
-    .css-1dp5vir,
-    .css-z5fcl4 {
-        background-color: #000000 !important;
-    }
+
     </style>
 """, unsafe_allow_html=True)
 
