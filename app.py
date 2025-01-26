@@ -19,94 +19,9 @@ load_dotenv()
 st.markdown(
     """
     <style>
-    /* --------------------------------------------------------------
-       1. Set up the overall chat input container to share one border
-       -------------------------------------------------------------- */
-    [data-testid="stChatInput"] {
-        /* A single border around the entire text box + arrow button */
-        border: 1px solid #333333 !important;
-        border-radius: 4px !important;
-        display: flex;
-        align-items: center;
-        background-color: #000000 !important;
-        transition: border 0.2s ease-in-out;
-        /* If your text box has padding or spacing, adjust here */
-        padding: 0.25rem;
-    }
-
-    /* When the user clicks or focuses inside the chat input,
-       the entire border (including arrow button) becomes red. */
-    [data-testid="stChatInput"]:focus-within {
-        border: 1px solid red !important;
-    }
-
-    /* --------------------------------------------------------------
-       2. The textarea part (inside the container)
-       -------------------------------------------------------------- */
-    [data-testid="stChatInputTextArea"] {
-        background-color: #000000 !important;
-        color: #ffffff !important;
-        border: none !important;
-        outline: none !important;
-        box-shadow: none !important;
-        resize: none !important;
-        flex: 1; /* Take up remaining space so the arrow sits at the end */
-    }
-    [data-testid="stChatInputTextArea"]:focus {
-        outline: none !important;
-    }
-
-    /* --------------------------------------------------------------
-       3. The arrow button & its icon
-       -------------------------------------------------------------- */
-    [data-testid="stChatInputSubmitButton"] {
-        /* Match the container's border so it looks seamless */
-        border: none !important;
-        border-radius: 4px !important; /* Or 0 if you want no rounding */
-        background-color: #000000 !important;
-        cursor: pointer !important;
-        /* By default, disabled states or empty states can be lighter */
-        color: #666666 !important;
-        fill: #666666 !important;
-        transition: color 0.2s, fill 0.2s, background-color 0.2s;
-        margin-left: 0.25rem; /* Some spacing between box and arrow */
-    }
-
-    /* If the user hasn't typed anything, the button is disabled.
-       (Streamlit typically sets the 'disabled' attribute if no text).
-       We'll keep it as a lighter gray arrow. */
-    [data-testid="stChatInputSubmitButton"][disabled] {
-        cursor: not-allowed !important;
-        color: #666666 !important;
-        fill: #666666 !important;
-        opacity: 0.6 !important; /* slightly faded */
-    }
-
-    /* Once the user types text, the button is enabled:
-       We give it a darker/active color. */
-    [data-testid="stChatInputSubmitButton"]:not([disabled]) {
-        color: #aaaaaa !important;  /* default arrow color when text is present */
-        fill: #aaaaaa !important;
-    }
-
-    /* When the user hovers over an enabled arrow button,
-       make it match your local UI highlight color. */
-    [data-testid="stChatInputSubmitButton"]:not([disabled]):hover {
-        background-color: #1a1a1a !important;
-        color: #ffffff !important;
-        fill: #ffffff !important;
-    }
-
-    /* When the user focuses (e.g. tabbing to the button),
-       match the same red border (or highlight) if desired. */
-    [data-testid="stChatInputSubmitButton"]:focus {
-        outline: none !important;
-        box-shadow: 0 0 0 2px red !important; /* optional focus ring */
-    }
-
-    /* --------------------------------------------------------------
-       4. Other elements (sidebar, scrollbars, etc.), unchanged
-       -------------------------------------------------------------- */
+    /* ----------------------------------------------------------
+       1. Force black background in all high-level HTML containers
+       ---------------------------------------------------------- */
     html, body {
         background-color: #000000 !important;
         color: #ffffff !important;
@@ -119,6 +34,10 @@ st.markdown(
         background-color: #000000 !important;
         color: #ffffff !important;
     }
+
+    /* ----------------------------------------------------------
+       2. Streamlit's main UI, header, footer, and sidebar
+       ---------------------------------------------------------- */
     .stApp {
         background-color: #000000 !important;
     }
@@ -140,11 +59,154 @@ st.markdown(
     [data-testid="stSidebarNav"] {
         background-color: #000000 !important;
     }
+
+    /* ----------------------------------------------------------
+       3. Font & Text Colors
+       ---------------------------------------------------------- */
     .stMarkdown, p, span, div {
         color: #ffffff !important;
     }
     h1, h2, h3 {
         color: #ffffff !important;
+    }
+
+    /* ----------------------------------------------------------
+       4. Chat Container & Message Bubbles
+       ---------------------------------------------------------- */
+    .stChatContainer {
+        background-color: #000000 !important;
+    }
+    .stChatMessage {
+        background-color: #1a1a1a !important;
+    }
+    .stChatMessageContent {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+    }
+    /* Avatars */
+    .stChatMessage > div:first-child {
+        background-color: black !important;
+        border: 2px solid black !important;
+    }
+    .stChatMessage > div:first-child > div {
+        border: 2px solid black !important;
+    }
+
+    /* ----------------------------------------------------------
+       5. Text Inputs (General)
+       ---------------------------------------------------------- */
+    .stTextInput > div > div > input {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        border: 1px solid #333333 !important;
+        caret-color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+    input[type="password"] {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        caret-color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+    input:focus {
+        outline: none !important;
+        caret-color: #ffffff !important;
+        caret-animation: blink 1s infinite;
+    }
+    input::selection {
+        background-color: rgba(255, 255, 255, 0.2) !important;
+        color: #ffffff !important;
+    }
+
+    /* ----------------------------------------------------------
+       6. Chat-Specific Input Fields
+       ---------------------------------------------------------- */
+    .stChatInputContainer {
+        background-color: #1a1a1a !important;
+    }
+    /* The <textarea> for chat */
+    textarea {
+        color: #ffffff !important;
+        caret-color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        opacity: 1 !important;
+    }
+    .stChatInput {
+        color: #ffffff !important;
+    }
+    [data-testid="stChatInput"] {
+        color: #ffffff !important;
+        background-color: #1a1a1a !important;
+    }
+    [data-testid="stChatInput"] textarea {
+        color: #ffffff !important;
+        background-color: #1a1a1a !important;
+        caret-color: #ffffff !important;
+        border: 1px solid #333333 !important;
+    }
+    textarea:focus {
+        outline: none !important;
+        caret-color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        caret-animation: blink 1s infinite;
+    }
+    textarea::selection {
+        background-color: rgba(255, 255, 255, 0.2) !important;
+        color: #ffffff !important;
+    }
+
+    /* Cursor blink animation */
+    @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    /* ----------------------------------------------------------
+       7. Buttons
+       ---------------------------------------------------------- */
+    .stButton > button {
+        width: 100%;
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        border: 1px solid #333333 !important;
+    }
+
+    /* The form submit button (sidebar "Enter" button) */
+    [data-testid="stFormSubmitButton"] button {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        border: 1px solid #333333 !important;
+        width: 100% !important;
+        font-size: 1rem !important;
+        margin-top: 0.5rem !important;
+
+        /* Ensure it's not disabled by CSS */
+        pointer-events: auto !important;
+        cursor: pointer !important;
+        opacity: 1 !important;
+    }
+
+    /* The chat submit button */
+    [data-testid="stChatInputSubmitButton"] {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        border: 1px solid #333333 !important;
+    }
+
+    /* ----------------------------------------------------------
+       8. Other UI Elements
+       ---------------------------------------------------------- */
+    .api-status {
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 4px;
+        background-color: #1a1a1a !important;
+        text-align: center;
+    }
+    .stAlert {
+        background-color: #1a1a1a !important;
+        color: #ff4444 !important;
     }
     ::-webkit-scrollbar {
         background: #000000 !important;
@@ -163,23 +225,29 @@ st.markdown(
     iframe {
         background-color: #000000 !important;
     }
-    .stTextInput > div > div > input {
-        background-color: #1a1a1a !important;
-        color: #ffffff !important;
-        border: 1px solid #333333 !important;
-        caret-color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
+
+    /* ----------------------------------------------------------
+       9. Additional Overriding for Bottom Regions
+       ---------------------------------------------------------- */
+    [data-testid="stBottom"] {
+        background-color: #000000 !important;
     }
-    [data-testid="stFormSubmitButton"] button {
-        background-color: #1a1a1a !important;
-        color: #ffffff !important;
-        border: 1px solid #333333 !important;
-        width: 100% !important;
-        font-size: 1rem !important;
-        margin-top: 0.5rem !important;
-        pointer-events: auto !important;
-        cursor: pointer !important;
-        opacity: 1 !important;
+    [data-testid="stBottomBlockContainer"] {
+        background-color: #000000 !important;
+    }
+    [data-testid="stVerticalBlockBorderWrapper"] {
+        background-color: #000000 !important;
+    }
+    [data-testid="stVerticalBlock"] {
+        background-color: #000000 !important;
+    }
+    [data-testid="stElementContainer"] {
+        background-color: #000000 !important;
+    }
+
+    /* Example for any additional st-emotion-cache classes if needed */
+    .st-emotion-cache-128upt6.ekr3hml3 {
+        background-color: #000000 !important;
     }
     </style>
     """,
