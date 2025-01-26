@@ -16,68 +16,219 @@ from langchain_core.tools import tool, ToolException
 load_dotenv()
 
 # Custom CSS for dark theme and UI modifications
-st.markdown("""
+st.markdown(
+    """
     <style>
-    /* Keep all your existing CSS, but add/modify these specific sections */
+    /* Main background colors - forcing black everywhere */
+    .stApp {
+        background-color: #000000 !important;
+    }
+    
+    .main {
+        background-color: #000000 !important;
+    }
+    
+    [data-testid="stAppViewContainer"] {
+        background-color: #000000 !important;
+    }
+    
+    [data-testid="stHeader"] {
+        background-color: #000000 !important;
+    }
+    
+    [data-testid="stToolbar"] {
+        background-color: #000000 !important;
+    }
+    
+    .stChatFloatingInputContainer {
+        background-color: #000000 !important;
+    }
+    
+    footer {
+        background-color: #000000 !important;
+    }
+    
+    /* Sidebar styling */
+    section[data-testid="stSidebar"] {
+        background-color: #000000 !important;
+    }
+    
+    [data-testid="stSidebarNav"] {
+        background-color: #000000 !important;
+    }
+    
+    /* Font colors */
+    .stMarkdown, p, span, div {
+        color: #ffffff !important;
+    }
+    
+    h1, h2, h3 {
+        color: #ffffff !important;
+    }
+    
+    /* Chat container and messages */
+    .stChatContainer {
+        background-color: #000000 !important;
+    }
+    
+    .stChatMessage {
+        background-color: #1a1a1a !important;
+    }
+    
+    .stChatMessageContent {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+    }
+    
+    /* Avatar styling with black background and border */
+    .stChatMessage > div:first-child {
+        background-color: black !important;
+        border: 2px solid black !important;
+    }
 
-    /* Fix for the bottom chat input container */
+    .stChatMessage > div:first-child > div {
+        border: 2px solid black !important;
+    }
+    
+    /* Enhanced input field styling with cursor visibility */
+    .stTextInput > div > div > input {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        border: 1px solid #333333 !important;
+        caret-color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+    
+    /* Style for password input field in sidebar */
+    input[type="password"] {
+        caret-color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        color: #ffffff !important;
+    }
+    
+    /* Focus state for input fields */
+    input:focus {
+        outline: none !important;
+        caret-color: #ffffff !important;
+        caret-animation: blink 1s infinite;
+    }
+    
+    /* Selection styling for input fields */
+    input::selection {
+        background-color: rgba(255, 255, 255, 0.2) !important;
+        color: #ffffff !important;
+    }
+    
+    /* Chat input styling */
     .stChatInputContainer {
-        background-color: #000000 !important;
-        border: none !important;
-        padding: 0 !important;
-    }
-
-    /* Target the chat message input box specifically */
-    .stChatInput > textarea {
         background-color: #1a1a1a !important;
-        color: #ffffff !important;
-        border: 1px solid #333333 !important;
-        border-radius: 4px !important;
     }
-
-    /* Fix for the sidebar Enter button */
-    [data-testid="stSidebar"] .stButton button {
-        background-color: #1a1a1a !important;
+    
+    /* Specific styling for the chat input textarea */
+    textarea {
         color: #ffffff !important;
-        border: 1px solid #333333 !important;
-        width: 100% !important;
-        padding: 0.5rem 1rem !important;
-        border-radius: 4px !important;
-        height: 38px !important;
-        line-height: 1.5 !important;
-        margin-top: 0.5rem !important;
+        caret-color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        opacity: 1 !important;
     }
-
-    /* Target specifically the chat input container at the bottom */
+    
+    .stChatInput {
+        color: #ffffff !important;
+    }
+    
     [data-testid="stChatInput"] {
+        color: #ffffff !important;
+    }
+    
+    /* Enhanced cursor visibility for chat input */
+    [data-testid="stChatInput"] textarea {
+        color: #ffffff !important;
+        caret-color: #ffffff !important;
+    }
+    
+    textarea:focus {
+        outline: none !important;
+        caret-color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        caret-animation: blink 1s infinite;
+    }
+    
+    textarea::selection {
+        background-color: rgba(255, 255, 255, 0.2) !important;
+        color: #ffffff !important;
+    }
+    
+    /* Cursor blink animation */
+    @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+    
+    /* Button styling */
+    .stButton > button {
+        width: 100%;
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        border: 1px solid #333333 !important;
+    }
+    
+    /* Status indicator styling */
+    .api-status {
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 4px;
+        background-color: #1a1a1a !important;
+        text-align: center;
+    }
+    
+    /* Error message styling */
+    .stAlert {
+        background-color: #1a1a1a !important;
+        color: #ff4444 !important;
+    }
+    
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+        background: #000000 !important;
+        width: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: #333333 !important;
+        border-radius: 5px;
+    }
+
+    /* Override any remaining white spaces */
+    div[data-testid="stDecoration"] {
+        background-color: #000000 !important;
+    }
+    
+    div[data-testid="stStatusWidget"] {
+        background-color: #000000 !important;
+    }
+    
+    iframe {
         background-color: #000000 !important;
     }
 
-    /* Additional background color enforcement */
-    .element-container, .stTextInput {
-        background-color: #000000 !important;
+    /*********** NEW OVERRIDES BELOW ************/
+
+    /* Fix smaller white form-submit button */
+    [data-testid="stFormSubmitButton"] {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        border: 1px solid #333333 !important;
     }
 
-    /* Target the outermost chat container */
-    [data-testid="stChatMessageContainer"] > div {
-        background-color: #000000 !important;
-    }
-
-    /* Make sure the main content area stays black */
-    .main .block-container {
-        background-color: #000000 !important;
-    }
-
-    /* Additional fixes for the chat input area */
-    .stChatFloatingInputContainer, 
-    .stChatInputContainer,
-    [data-testid="stChatInput"],
-    div:has(> [data-testid="stChatInput"]) {
-        background-color: #000000 !important;
-        box-shadow: none !important;
+    /* Force bottom chat input area to match dark background */
+    [data-testid="stChatMessageInput"] {
+        background-color: #1a1a1a !important;
     }
     </style>
-""", unsafe_allow_html=True)
+    """,
+    unsafe_allow_html=True
+)
 
 # Initialize session state for chat history and API key status
 if 'messages' not in st.session_state:
