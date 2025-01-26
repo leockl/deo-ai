@@ -55,6 +55,22 @@ st.markdown("""
     [data-testid="stSidebarNav"] {
         background-color: #000000 !important;
     }
+
+    [data-testid="stSidebar"] input,
+    [data-testid="stSidebar"] .stTextInput > div > div > input {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        border: 1px solid #333333 !important;
+        border-radius: 4px !important;
+    }
+
+    [data-testid="stSidebar"] .stButton > button {
+        width: 100% !important;
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        border: 1px solid #333333 !important;
+        min-height: 40px !important;
+    }
     
     /* Font colors */
     .stMarkdown, p, span, div {
@@ -67,6 +83,10 @@ st.markdown("""
     
     /* Chat container and messages */
     .stChatContainer {
+        background-color: #000000 !important;
+    }
+
+    [data-testid="stChatMessageContainer"] {
         background-color: #000000 !important;
     }
     
@@ -119,11 +139,25 @@ st.markdown("""
     }
     
     /* Chat input styling */
-    .stChatInputContainer {
-        background-color: #1a1a1a !important;
+    .stChatInputContainer,
+    [data-testid="stChatInput"] {
+        background-color: #000000 !important;
+        border-color: #333333 !important;
+        padding: 1rem !important;
+        margin: 0 !important;
     }
     
-    /* Specific styling for the chat input textarea */
+    /* Chat input field */
+    .stChatInputContainer textarea,
+    [data-testid="stChatInput"] textarea {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        border: 1px solid #333333 !important;
+        padding: 0.5rem !important;
+        caret-color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+    
     textarea {
         color: #ffffff !important;
         caret-color: #ffffff !important;
@@ -166,10 +200,19 @@ st.markdown("""
     
     /* Button styling */
     .stButton > button {
-        width: 100%;
+        width: 100% !important;
         background-color: #1a1a1a !important;
         color: #ffffff !important;
         border: 1px solid #333333 !important;
+        padding: 0.5rem 1rem !important;
+        margin: 0.5rem 0 !important;
+        height: auto !important;
+        border-radius: 4px !important;
+    }
+
+    .stButton > button:hover {
+        background-color: #333333 !important;
+        border-color: #444444 !important;
     }
     
     /* Status indicator styling */
@@ -208,6 +251,15 @@ st.markdown("""
     }
     
     iframe {
+        background-color: #000000 !important;
+    }
+    
+    /* Container background reinforcement */
+    [data-testid="stAppViewContainer"],
+    [data-testid="stChatContainer"],
+    .main,
+    .css-1dp5vir,
+    .css-z5fcl4 {
         background-color: #000000 !important;
     }
     </style>
