@@ -1,3 +1,6 @@
 openai
 python-dotenv
 requests
+langchain-core
+langchain-openai
+langgraph
