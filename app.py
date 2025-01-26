@@ -211,28 +211,37 @@ st.markdown(
         margin-top: 0.5rem !important;
     }
 
-    /* Force all possible bottom chat containers to be dark */
-    [data-testid="stChatMessageInputContainer"] {
-        background-color: #1a1a1a !important;
+    /* Force bottom region (which has data-testid="stBottom") to be dark */
+    [data-testid="stBottom"] {
+        background-color: #000000 !important;
     }
-    [data-testid="stChatInputContainer"] {
-        background-color: #1a1a1a !important;
+    /* The block container inside stBottom */
+    [data-testid="stBottomBlockContainer"] {
+        background-color: #000000 !important;
     }
-    [data-testid="stChatMessageInput"] {
-        background-color: #1a1a1a !important;
+    [data-testid="stVerticalBlockBorderWrapper"] {
+        background-color: #000000 !important;
     }
-    [data-testid="stChatMessageInput"] textarea {
+    [data-testid="stVerticalBlock"] {
+        background-color: #000000 !important;
+    }
+
+    /* The chat input wrapper and button in that bottom region */
+    [data-testid="stChatInput"] {
+        background-color: #000000 !important;
+    }
+    [data-testid="stChatInputSubmitButton"] {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        border: 1px solid #333333 !important;
+    }
+
+    /* The <textarea> in that bottom region */
+    [data-testid="stChatInputTextArea"] {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
         border: 1px solid #333333 !important;
         caret-color: #ffffff !important;
-    }
-    /* For some versions, the entire widget container */
-    [data-testid="stChatWidget"] {
-        background-color: #000000 !important;
-    }
-    [data-testid="stChatMainContainer"] {
-        background-color: #000000 !important;
     }
     </style>
     """,
