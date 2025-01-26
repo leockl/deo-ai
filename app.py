@@ -18,88 +18,64 @@ load_dotenv()
 # Custom CSS for dark theme and UI modifications
 st.markdown("""
     <style>
-    /* Previous styles remain the same until the button styling section */
+    /* Keep all your existing CSS, but add/modify these specific sections */
 
-    /* Updated Button styling */
-    .stButton > button,
-    button[kind="secondary"],
-    .stButton button,
-    .sidebar .stButton button {
-        width: 100% !important;
-        background-color: #1a1a1a !important;
-        color: #ffffff !important;
-        border: 1px solid #333333 !important;
-        padding: 0.75rem 1rem !important;
-        margin: 0.5rem 0 !important;
-        min-height: 46px !important;
-        border-radius: 4px !important;
-        line-height: 1.6 !important;
-        font-size: 14px !important;
-    }
-
-    /* Chat input container and bottom area */
-    .stChatFloatingInputContainer,
-    div[data-testid="stChatInputContainer"] {
-        background-color: #000000 !important;
-        border: none !important;
-        padding: 1rem !important;
-        margin: 0 !important;
-    }
-
-    /* Chat input field and send button container */
+    /* Fix for the bottom chat input container */
     .stChatInputContainer {
         background-color: #000000 !important;
-        border-color: #333333 !important;
+        border: none !important;
+        padding: 0 !important;
     }
 
-    /* Send button in chat */
-    button[data-testid="chat-send-button"],
-    .stChatFloatingInputContainer button {
+    /* Target the chat message input box specifically */
+    .stChatInput > textarea {
         background-color: #1a1a1a !important;
-        border: 1px solid #333333 !important;
         color: #ffffff !important;
+        border: 1px solid #333333 !important;
+        border-radius: 4px !important;
     }
 
-    /* White space at the bottom */
-    .main .block-container {
-        padding-bottom: 0px !important;
-        margin-bottom: 0px !important;
+    /* Fix for the sidebar Enter button */
+    [data-testid="stSidebar"] .stButton button {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        border: 1px solid #333333 !important;
+        width: 100% !important;
+        padding: 0.5rem 1rem !important;
+        border-radius: 4px !important;
+        height: 38px !important;
+        line-height: 1.5 !important;
+        margin-top: 0.5rem !important;
     }
 
-    [data-testid="stAppViewBlockContainer"] {
-        padding-bottom: 0px !important;
-        margin-bottom: 0px !important;
+    /* Target specifically the chat input container at the bottom */
+    [data-testid="stChatInput"] {
+        background-color: #000000 !important;
     }
 
     /* Additional background color enforcement */
-    div[class*="stChatFloatingInputContainer"],
-    div[class*="stChatContainer"],
-    div[class*="stMarkdown"],
-    div[data-testid*="stChatMessageContainer"] {
+    .element-container, .stTextInput {
         background-color: #000000 !important;
     }
 
-    /* Chat message input box */
-    textarea[aria-label="Message"] {
-        background-color: #1a1a1a !important;
-        color: #ffffff !important;
-        border: 1px solid #333333 !important;
-    }
-
-    /* Bottom container fixes */
-    .element-container,
-    .stChatFloatingInputContainer,
-    .stMarkdown,
-    div[data-testid="stChatMessageContainer"] {
+    /* Target the outermost chat container */
+    [data-testid="stChatMessageContainer"] > div {
         background-color: #000000 !important;
     }
 
-    /* Ensure proper spacing and alignment */
-    .stChatFloatingInputContainer {
-        margin-bottom: 0 !important;
-        padding-bottom: 2rem !important;
+    /* Make sure the main content area stays black */
+    .main .block-container {
+        background-color: #000000 !important;
     }
 
+    /* Additional fixes for the chat input area */
+    .stChatFloatingInputContainer, 
+    .stChatInputContainer,
+    [data-testid="stChatInput"],
+    div:has(> [data-testid="stChatInput"]) {
+        background-color: #000000 !important;
+        box-shadow: none !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
