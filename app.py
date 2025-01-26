@@ -19,78 +19,77 @@ load_dotenv()
 st.markdown(
     """
     <style>
-    /* Main background colors - forcing black everywhere */
+    /* -----------------------------
+       1. Global / Main UI Overrides
+       ----------------------------- */
     .stApp {
         background-color: #000000 !important;
     }
-
     .main {
         background-color: #000000 !important;
     }
-
     [data-testid="stAppViewContainer"] {
         background-color: #000000 !important;
     }
-
     [data-testid="stHeader"] {
         background-color: #000000 !important;
     }
-
     [data-testid="stToolbar"] {
         background-color: #000000 !important;
     }
-
     .stChatFloatingInputContainer {
         background-color: #000000 !important;
     }
-
     footer {
         background-color: #000000 !important;
     }
-
-    /* Sidebar styling */
+    /* Sidebar */
     section[data-testid="stSidebar"] {
         background-color: #000000 !important;
     }
-
     [data-testid="stSidebarNav"] {
         background-color: #000000 !important;
     }
 
-    /* Font colors */
+    /* -----------------------------
+       2. Font & Text Color
+       ----------------------------- */
     .stMarkdown, p, span, div {
         color: #ffffff !important;
     }
-
     h1, h2, h3 {
         color: #ffffff !important;
     }
 
-    /* Chat container and messages */
+    /* -----------------------------
+       3. Chat Container & Messages
+       ----------------------------- */
+    /* Overall chat background */
     .stChatContainer {
         background-color: #000000 !important;
     }
-
+    /* Each chat message bubble */
     .stChatMessage {
         background-color: #1a1a1a !important;
     }
-
     .stChatMessageContent {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
     }
 
-    /* Avatar styling with black background and border */
+    /* Avatar styling with black background/border */
     .stChatMessage > div:first-child {
         background-color: black !important;
         border: 2px solid black !important;
     }
-
     .stChatMessage > div:first-child > div {
         border: 2px solid black !important;
     }
 
-    /* Enhanced input field styling with cursor visibility */
+    /* -----------------------------
+       4. Text Input Fields
+       ----------------------------- */
+    /* Normal text inputs */
     .stTextInput > div > div > input {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
@@ -98,61 +97,53 @@ st.markdown(
         caret-color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
     }
-
-    /* Style for password input field in sidebar */
+    /* Password inputs */
     input[type="password"] {
         caret-color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
         color: #ffffff !important;
     }
-
-    /* Focus state for input fields */
+    /* Input focus & selection */
     input:focus {
         outline: none !important;
         caret-color: #ffffff !important;
         caret-animation: blink 1s infinite;
     }
-
-    /* Selection styling for input fields */
     input::selection {
         background-color: rgba(255, 255, 255, 0.2) !important;
         color: #ffffff !important;
     }
 
-    /* Chat input styling */
+    /* -----------------------------
+       5. Chat-Specific Input Fields
+       ----------------------------- */
     .stChatInputContainer {
         background-color: #1a1a1a !important;
     }
-
-    /* Specific styling for the chat input textarea */
+    /* The actual <textarea> (chat input) */
     textarea {
         color: #ffffff !important;
         caret-color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
         opacity: 1 !important;
     }
-
     .stChatInput {
         color: #ffffff !important;
     }
-
     [data-testid="stChatInput"] {
         color: #ffffff !important;
     }
-
-    /* Enhanced cursor visibility for chat input */
     [data-testid="stChatInput"] textarea {
         color: #ffffff !important;
         caret-color: #ffffff !important;
     }
-
+    /* Focus & selection for textarea */
     textarea:focus {
         outline: none !important;
         caret-color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
         caret-animation: blink 1s infinite;
     }
-
     textarea::selection {
         background-color: rgba(255, 255, 255, 0.2) !important;
         color: #ffffff !important;
@@ -165,7 +156,9 @@ st.markdown(
         100% { opacity: 1; }
     }
 
-    /* Button styling */
+    /* -----------------------------
+       6. Button Styling
+       ----------------------------- */
     .stButton > button {
         width: 100%;
         background-color: #1a1a1a !important;
@@ -173,7 +166,9 @@ st.markdown(
         border: 1px solid #333333 !important;
     }
 
-    /* Status indicator styling */
+    /* -----------------------------
+       7. Other UI Elements
+       ----------------------------- */
     .api-status {
         margin-top: 10px;
         padding: 10px;
@@ -181,40 +176,32 @@ st.markdown(
         background-color: #1a1a1a !important;
         text-align: center;
     }
-
-    /* Error message styling */
     .stAlert {
         background-color: #1a1a1a !important;
         color: #ff4444 !important;
     }
-
-    /* Scrollbar styling */
     ::-webkit-scrollbar {
         background: #000000 !important;
         width: 10px;
     }
-
     ::-webkit-scrollbar-thumb {
         background: #333333 !important;
         border-radius: 5px;
     }
-
-    /* Override any remaining white spaces */
     div[data-testid="stDecoration"] {
         background-color: #000000 !important;
     }
-
     div[data-testid="stStatusWidget"] {
         background-color: #000000 !important;
     }
-
     iframe {
         background-color: #000000 !important;
     }
 
-    /*********** NEW OVERRIDES BELOW ************/
-
-    /* Make "Enter" form-submit button fully dark */
+    /* -----------------------------
+       8. NEW OVERRIDES
+       ----------------------------- */
+    /* Make the "Enter" form-submit button fully dark */
     [data-testid="stFormSubmitButton"] button {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
@@ -224,24 +211,28 @@ st.markdown(
         margin-top: 0.5rem !important;
     }
 
-    /* Force the entire bottom chat input area to be dark */
+    /* Force all possible bottom chat containers to be dark */
     [data-testid="stChatMessageInputContainer"] {
         background-color: #1a1a1a !important;
     }
-
     [data-testid="stChatInputContainer"] {
         background-color: #1a1a1a !important;
     }
-
     [data-testid="stChatMessageInput"] {
         background-color: #1a1a1a !important;
     }
-
     [data-testid="stChatMessageInput"] textarea {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
         border: 1px solid #333333 !important;
         caret-color: #ffffff !important;
+    }
+    /* For some versions, the entire widget container */
+    [data-testid="stChatWidget"] {
+        background-color: #000000 !important;
+    }
+    [data-testid="stChatMainContainer"] {
+        background-color: #000000 !important;
     }
     </style>
     """,
