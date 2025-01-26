@@ -275,7 +275,7 @@ def initialize_streamlit():
     st.write("If you have a DAO proposal you want to optimize, please provide me the following:")
     st.write("1. The name of the DAO you're submitting the proposal to.")
     st.write("2. The proposal you want to optimize (I support proposals in 50+ languages and returns the optimized proposal to you in English).")
-    st.write("3. The number of recent proposals for this DAO to analyze (If you are using our provided OpenAI API key, you can analyze up to 50 recent proposals. If you are using your OpenAI API key, if 50 proposals returns an error, then analyze up to 20 to 25 recent proposals. This is due to token rate limits set by OpenAI depending on the Tier level your OpenAI account is on).")
+    st.write("3. The number of recent proposals to analyze for this DAO (If you are using our provided OpenAI API key, you can analyze up to 50 recent proposals. If you are using your OpenAI API key, if 50 proposals returns an error, then analyze up to 20 to 25 recent proposals. This is due to token rate limits set by OpenAI depending on the Tier level your OpenAI account is on).")
 
     # Sidebar title and API Key Management
     st.sidebar.title("🤖 Deo AI")
