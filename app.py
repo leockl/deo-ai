@@ -121,7 +121,6 @@ st.markdown(
     /* ----------------------------------------------------------
        6. Chat-Specific Input Fields
        ---------------------------------------------------------- */
-    /* The container of the chat input */
     .stChatInputContainer {
         background-color: #1a1a1a !important;
     }
@@ -233,7 +232,15 @@ st.markdown(
     [data-testid="stVerticalBlock"] {
         background-color: #000000 !important;
     }
+    [data-testid="stElementContainer"] {
+        background-color: #000000 !important;
+    }
 
+    /* This class from your HTML snippet:
+       ".st-emotion-cache-128upt6.ekr3hml3" */
+    .st-emotion-cache-128upt6.ekr3hml3 {
+        background-color: #000000 !important;
+    }
     </style>
     """,
     unsafe_allow_html=True
