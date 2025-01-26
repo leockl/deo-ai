@@ -171,6 +171,8 @@ st.markdown(
         color: #ffffff !important;
         border: 1px solid #333333 !important;
     }
+
+    /* The form submit button (sidebar "Enter" button) */
     [data-testid="stFormSubmitButton"] button {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
@@ -178,7 +180,14 @@ st.markdown(
         width: 100% !important;
         font-size: 1rem !important;
         margin-top: 0.5rem !important;
+
+        /* Ensure it's not disabled by CSS */
+        pointer-events: auto !important;
+        cursor: pointer !important;
+        opacity: 1 !important;
     }
+
+    /* The chat submit button */
     [data-testid="stChatInputSubmitButton"] {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
@@ -236,8 +245,7 @@ st.markdown(
         background-color: #000000 !important;
     }
 
-    /* This class from your HTML snippet:
-       ".st-emotion-cache-128upt6.ekr3hml3" */
+    /* Example for any additional st-emotion-cache classes if needed */
     .st-emotion-cache-128upt6.ekr3hml3 {
         background-color: #000000 !important;
     }
