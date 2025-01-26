@@ -19,13 +19,26 @@ load_dotenv()
 st.markdown(
     """
     <style>
-    /* -----------------------------
-       1. Global / Main UI Overrides
-       ----------------------------- */
-    .stApp {
+    /* ----------------------------------------------------------
+       1. Force black background in all high-level HTML containers
+       ---------------------------------------------------------- */
+    html, body {
         background-color: #000000 !important;
+        color: #ffffff !important;
     }
-    .main {
+    .main,
+    [data-testid="block-container"],
+    [data-testid="stBlock"],
+    [data-testid="stVerticalBlock"],
+    [data-testid="stHorizontalBlock"] {
+        background-color: #000000 !important;
+        color: #ffffff !important;
+    }
+
+    /* ----------------------------------------------------------
+       2. Streamlit's main UI, header, footer, and sidebar
+       ---------------------------------------------------------- */
+    .stApp {
         background-color: #000000 !important;
     }
     [data-testid="stAppViewContainer"] {
@@ -37,13 +50,9 @@ st.markdown(
     [data-testid="stToolbar"] {
         background-color: #000000 !important;
     }
-    .stChatFloatingInputContainer {
-        background-color: #000000 !important;
-    }
     footer {
         background-color: #000000 !important;
     }
-    /* Sidebar */
     section[data-testid="stSidebar"] {
         background-color: #000000 !important;
     }
@@ -51,9 +60,9 @@ st.markdown(
         background-color: #000000 !important;
     }
 
-    /* -----------------------------
-       2. Font & Text Color
-       ----------------------------- */
+    /* ----------------------------------------------------------
+       3. Font & Text Colors
+       ---------------------------------------------------------- */
     .stMarkdown, p, span, div {
         color: #ffffff !important;
     }
@@ -61,14 +70,12 @@ st.markdown(
         color: #ffffff !important;
     }
 
-    /* -----------------------------
-       3. Chat Container & Messages
-       ----------------------------- */
-    /* Overall chat background */
+    /* ----------------------------------------------------------
+       4. Chat Container & Message Bubbles
+       ---------------------------------------------------------- */
     .stChatContainer {
         background-color: #000000 !important;
     }
-    /* Each chat message bubble */
     .stChatMessage {
         background-color: #1a1a1a !important;
     }
@@ -76,8 +83,7 @@ st.markdown(
         background-color: #1a1a1a !important;
         color: #ffffff !important;
     }
-
-    /* Avatar styling with black background/border */
+    /* Avatars */
     .stChatMessage > div:first-child {
         background-color: black !important;
         border: 2px solid black !important;
@@ -86,10 +92,9 @@ st.markdown(
         border: 2px solid black !important;
     }
 
-    /* -----------------------------
-       4. Text Input Fields
-       ----------------------------- */
-    /* Normal text inputs */
+    /* ----------------------------------------------------------
+       5. Text Inputs (General)
+       ---------------------------------------------------------- */
     .stTextInput > div > div > input {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
@@ -97,13 +102,12 @@ st.markdown(
         caret-color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
     }
-    /* Password inputs */
     input[type="password"] {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
         caret-color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
-        color: #ffffff !important;
     }
-    /* Input focus & selection */
     input:focus {
         outline: none !important;
         caret-color: #ffffff !important;
@@ -114,13 +118,14 @@ st.markdown(
         color: #ffffff !important;
     }
 
-    /* -----------------------------
-       5. Chat-Specific Input Fields
-       ----------------------------- */
+    /* ----------------------------------------------------------
+       6. Chat-Specific Input Fields
+       ---------------------------------------------------------- */
+    /* The container of the chat input */
     .stChatInputContainer {
         background-color: #1a1a1a !important;
     }
-    /* The actual <textarea> (chat input) */
+    /* The <textarea> for chat */
     textarea {
         color: #ffffff !important;
         caret-color: #ffffff !important;
@@ -132,12 +137,14 @@ st.markdown(
     }
     [data-testid="stChatInput"] {
         color: #ffffff !important;
+        background-color: #1a1a1a !important;
     }
     [data-testid="stChatInput"] textarea {
         color: #ffffff !important;
+        background-color: #1a1a1a !important;
         caret-color: #ffffff !important;
+        border: 1px solid #333333 !important;
     }
-    /* Focus & selection for textarea */
     textarea:focus {
         outline: none !important;
         caret-color: #ffffff !important;
@@ -156,19 +163,32 @@ st.markdown(
         100% { opacity: 1; }
     }
 
-    /* -----------------------------
-       6. Button Styling
-       ----------------------------- */
+    /* ----------------------------------------------------------
+       7. Buttons
+       ---------------------------------------------------------- */
     .stButton > button {
         width: 100%;
         background-color: #1a1a1a !important;
         color: #ffffff !important;
         border: 1px solid #333333 !important;
     }
+    [data-testid="stFormSubmitButton"] button {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        border: 1px solid #333333 !important;
+        width: 100% !important;
+        font-size: 1rem !important;
+        margin-top: 0.5rem !important;
+    }
+    [data-testid="stChatInputSubmitButton"] {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        border: 1px solid #333333 !important;
+    }
 
-    /* -----------------------------
-       7. Other UI Elements
-       ----------------------------- */
+    /* ----------------------------------------------------------
+       8. Other UI Elements
+       ---------------------------------------------------------- */
     .api-status {
         margin-top: 10px;
         padding: 10px;
@@ -198,24 +218,12 @@ st.markdown(
         background-color: #000000 !important;
     }
 
-    /* -----------------------------
-       8. NEW OVERRIDES
-       ----------------------------- */
-    /* Make the "Enter" form-submit button fully dark */
-    [data-testid="stFormSubmitButton"] button {
-        background-color: #1a1a1a !important;
-        color: #ffffff !important;
-        border: 1px solid #333333 !important;
-        width: 100% !important;
-        font-size: 1rem !important;
-        margin-top: 0.5rem !important;
-    }
-
-    /* Force bottom region (which has data-testid="stBottom") to be dark */
+    /* ----------------------------------------------------------
+       9. Additional Overriding for Bottom Regions
+       ---------------------------------------------------------- */
     [data-testid="stBottom"] {
         background-color: #000000 !important;
     }
-    /* The block container inside stBottom */
     [data-testid="stBottomBlockContainer"] {
         background-color: #000000 !important;
     }
@@ -226,23 +234,6 @@ st.markdown(
         background-color: #000000 !important;
     }
 
-    /* The chat input wrapper and button in that bottom region */
-    [data-testid="stChatInput"] {
-        background-color: #000000 !important;
-    }
-    [data-testid="stChatInputSubmitButton"] {
-        background-color: #1a1a1a !important;
-        color: #ffffff !important;
-        border: 1px solid #333333 !important;
-    }
-
-    /* The <textarea> in that bottom region */
-    [data-testid="stChatInputTextArea"] {
-        background-color: #1a1a1a !important;
-        color: #ffffff !important;
-        border: 1px solid #333333 !important;
-        caret-color: #ffffff !important;
-    }
     </style>
     """,
     unsafe_allow_html=True
