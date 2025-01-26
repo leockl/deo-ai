@@ -224,7 +224,15 @@ st.markdown(
         margin-top: 0.5rem !important;
     }
 
-    /* Make the bottom chat input area fully dark */
+    /* Force the entire bottom chat input area to be dark */
+    [data-testid="stChatMessageInputContainer"] {
+        background-color: #1a1a1a !important;
+    }
+
+    [data-testid="stChatInputContainer"] {
+        background-color: #1a1a1a !important;
+    }
+
     [data-testid="stChatMessageInput"] {
         background-color: #1a1a1a !important;
     }
