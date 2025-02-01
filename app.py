@@ -76,14 +76,15 @@ st.markdown(
     .stChatContainer {
         background-color: #000000 !important;
     }
+    /* Add a black border to the entire chat message */
     .stChatMessage {
         background-color: #1a1a1a !important;
-        border: 2px solid #000000 !important; /* <-- ADDED THIS LINE */
+        border: 2px solid #000000 !important; /* changed to black */
     }
     .stChatMessageContent {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
-        border: 2px solid #000000 !important; /* <-- ADDED THIS LINE */
+        border: 2px solid #000000 !important; /* changed to black */
     }
     /* Avatars */
     .stChatMessage > div:first-child {
