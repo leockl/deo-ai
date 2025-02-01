@@ -76,17 +76,18 @@ st.markdown(
     .stChatContainer {
         background-color: #000000 !important;
     }
-    /* Remove the thick borders and shadows from each message */
-    .stChatMessage, .stChatMessageContent {
+    /* Here is the key addition to make each message border black */
+    .stChatMessage {
+        background-color: #1a1a1a !important;
+        border: 2px solid #000000 !important;
+    }
+    .stChatMessageContent {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
-        border: none !important;
-        box-shadow: none !important;
     }
-    /* Remove or recolor borders around the inner message content */
+    /* Forces any default gray border to be black. */
     [data-testid="stVerticalBlockBorderWrapper"] {
         border: 2px solid #000000 !important;
-        box-shadow: none !important;
     }
 
     /* Avatars */
