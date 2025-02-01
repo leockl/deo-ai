@@ -78,10 +78,12 @@ st.markdown(
     }
     .stChatMessage {
         background-color: #1a1a1a !important;
+        border: 2px solid #000000 !important; /* <-- ADDED THIS LINE */
     }
     .stChatMessageContent {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
+        border: 2px solid #000000 !important; /* <-- ADDED THIS LINE */
     }
     /* Avatars */
     .stChatMessage > div:first-child {
