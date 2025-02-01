@@ -20,7 +20,7 @@ st.markdown(
     """
     <style>
     /* ----------------------------------------------------------
-       1. Force black background in all high-level HTML containers
+       1. Global containers & background
        ---------------------------------------------------------- */
     html, body {
         background-color: #000000 !important;
@@ -35,33 +35,17 @@ st.markdown(
         color: #ffffff !important;
     }
 
-    /* ----------------------------------------------------------
-       2. Streamlit's main UI, header, footer, and sidebar
-       ---------------------------------------------------------- */
-    .stApp {
-        background-color: #000000 !important;
-    }
-    [data-testid="stAppViewContainer"] {
-        background-color: #000000 !important;
-    }
-    [data-testid="stHeader"] {
-        background-color: #000000 !important;
-    }
-    [data-testid="stToolbar"] {
-        background-color: #000000 !important;
-    }
-    footer {
-        background-color: #000000 !important;
-    }
-    section[data-testid="stSidebar"] {
-        background-color: #000000 !important;
-    }
+    .stApp, [data-testid="stAppViewContainer"],
+    [data-testid="stHeader"],
+    [data-testid="stToolbar"],
+    footer, section[data-testid="stSidebar"],
     [data-testid="stSidebarNav"] {
         background-color: #000000 !important;
+        color: #ffffff !important;
     }
 
     /* ----------------------------------------------------------
-       3. Font & Text Colors
+       2. Font & Text Colors
        ---------------------------------------------------------- */
     .stMarkdown, p, span, div {
         color: #ffffff !important;
@@ -71,36 +55,36 @@ st.markdown(
     }
 
     /* ----------------------------------------------------------
-       4. Chat Container & Message Bubbles
+       3. Chat Container & Message Bubbles
        ---------------------------------------------------------- */
     .stChatContainer {
         background-color: #000000 !important;
     }
-    /* Here is the key addition to make each message border black */
-    .stChatMessage {
-        background-color: #1a1a1a !important;
+
+    /* 
+       Force the borders inside each message to be black, 
+       removing any default gray border or box-shadow. 
+    */
+    .stChatMessage, .stChatMessageContent, [data-testid="stVerticalBlockBorderWrapper"] {
         border: 2px solid #000000 !important;
+        box-shadow: none !important;
+        background-color: #1a1a1a !important;
     }
     .stChatMessageContent {
-        background-color: #1a1a1a !important;
         color: #ffffff !important;
-    }
-    /* Forces any default gray border to be black. */
-    [data-testid="stVerticalBlockBorderWrapper"] {
-        border: 2px solid #000000 !important;
     }
 
     /* Avatars */
     .stChatMessage > div:first-child {
-        background-color: black !important;
-        border: 2px solid black !important;
+        background-color: #000000 !important;
+        border: 2px solid #000000 !important;
     }
     .stChatMessage > div:first-child > div {
-        border: 2px solid black !important;
+        border: 2px solid #000000 !important;
     }
 
     /* ----------------------------------------------------------
-       5. Text Inputs (General)
+       4. Text Inputs (General)
        ---------------------------------------------------------- */
     .stTextInput > div > div > input {
         background-color: #1a1a1a !important;
@@ -126,20 +110,10 @@ st.markdown(
     }
 
     /* ----------------------------------------------------------
-       6. Chat-Specific Input Fields
+       5. Chat-Specific Input Fields
        ---------------------------------------------------------- */
     .stChatInputContainer {
         background-color: #1a1a1a !important;
-    }
-    /* The <textarea> for chat */
-    textarea {
-        color: #ffffff !important;
-        caret-color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-        opacity: 1 !important;
-    }
-    .stChatInput {
-        color: #ffffff !important;
     }
     [data-testid="stChatInput"] {
         color: #ffffff !important;
@@ -162,7 +136,6 @@ st.markdown(
         color: #ffffff !important;
     }
 
-    /* Cursor blink animation */
     @keyframes blink {
         0% { opacity: 1; }
         50% { opacity: 0; }
@@ -170,7 +143,7 @@ st.markdown(
     }
 
     /* ----------------------------------------------------------
-       7. Buttons
+       6. Buttons
        ---------------------------------------------------------- */
     .stButton > button {
         width: 100%;
@@ -178,8 +151,6 @@ st.markdown(
         color: #ffffff !important;
         border: 1px solid #333333 !important;
     }
-
-    /* The form submit button (sidebar "Enter" button) */
     [data-testid="stFormSubmitButton"] button {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
@@ -187,14 +158,10 @@ st.markdown(
         width: 100% !important;
         font-size: 1rem !important;
         margin-top: 0.5rem !important;
-
-        /* Ensure it's not disabled by CSS */
         pointer-events: auto !important;
         cursor: pointer !important;
         opacity: 1 !important;
     }
-
-    /* The chat submit button */
     [data-testid="stChatInputSubmitButton"] {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
@@ -202,7 +169,7 @@ st.markdown(
     }
 
     /* ----------------------------------------------------------
-       8. Other UI Elements
+       7. Other UI Elements
        ---------------------------------------------------------- */
     .api-status {
         margin-top: 10px;
@@ -215,6 +182,7 @@ st.markdown(
         background-color: #1a1a1a !important;
         color: #ff4444 !important;
     }
+
     ::-webkit-scrollbar {
         background: #000000 !important;
         width: 10px;
@@ -223,37 +191,19 @@ st.markdown(
         background: #333333 !important;
         border-radius: 5px;
     }
-    div[data-testid="stDecoration"] {
-        background-color: #000000 !important;
-    }
-    div[data-testid="stStatusWidget"] {
-        background-color: #000000 !important;
-    }
+    div[data-testid="stDecoration"],
+    div[data-testid="stStatusWidget"],
     iframe {
         background-color: #000000 !important;
     }
 
     /* ----------------------------------------------------------
-       9. Additional Overriding for Bottom Regions
+       8. Overriding bottom regions
        ---------------------------------------------------------- */
-    [data-testid="stBottom"] {
-        background-color: #000000 !important;
-    }
-    [data-testid="stBottomBlockContainer"] {
-        background-color: #000000 !important;
-    }
-    [data-testid="stVerticalBlockBorderWrapper"] {
-        background-color: #000000 !important;
-    }
-    [data-testid="stVerticalBlock"] {
-        background-color: #000000 !important;
-    }
+    [data-testid="stBottom"],
+    [data-testid="stBottomBlockContainer"],
+    [data-testid="stVerticalBlock"],
     [data-testid="stElementContainer"] {
-        background-color: #000000 !important;
-    }
-
-    /* Example for any additional st-emotion-cache classes if needed */
-    .st-emotion-cache-128upt6.ekr3hml3 {
         background-color: #000000 !important;
     }
     </style>
