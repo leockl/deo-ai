@@ -76,16 +76,19 @@ st.markdown(
     .stChatContainer {
         background-color: #000000 !important;
     }
-    /* Add a black border to the entire chat message */
-    .stChatMessage {
-        background-color: #1a1a1a !important;
-        border: 2px solid #000000 !important; /* changed to black */
-    }
-    .stChatMessageContent {
+    /* Remove the thick borders and shadows from each message */
+    .stChatMessage, .stChatMessageContent {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
-        border: 2px solid #000000 !important; /* changed to black */
+        border: none !important;
+        box-shadow: none !important;
     }
+    /* Remove or recolor borders around the inner message content */
+    [data-testid="stVerticalBlockBorderWrapper"] {
+        border: 2px solid #000000 !important;
+        box-shadow: none !important;
+    }
+
     /* Avatars */
     .stChatMessage > div:first-child {
         background-color: black !important;
