@@ -76,14 +76,24 @@ st.markdown(
     .stChatContainer {
         background-color: #000000 !important;
     }
+
+    /* Remove or recolor the thick border around each chat message */
+    /* This selector targets the wrapper that actually has the border. */
+    [data-testid="stVerticalBlockBorderWrapper"] {
+        border: 2px solid #000000 !important;  /* black border */
+        box-shadow: none !important;
+    }
+
     .stChatMessage {
         background-color: #1a1a1a !important;
-        /* Add the following line to make borders black instead of gray: */
-        border: 2px solid #000 !important;
+        border: none !important;
+        box-shadow: none !important;
     }
     .stChatMessageContent {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
+        border: none !important;
+        box-shadow: none !important;
     }
     /* Avatars */
     .stChatMessage > div:first-child {
@@ -239,6 +249,8 @@ st.markdown(
     }
     [data-testid="stVerticalBlockBorderWrapper"] {
         background-color: #000000 !important;
+        border: 2px solid #000000 !important; /* This is key to replacing the thick gray border with black */
+        box-shadow: none !important;
     }
     [data-testid="stVerticalBlock"] {
         background-color: #000000 !important;
