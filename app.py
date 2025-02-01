@@ -19,18 +19,8 @@ load_dotenv()
 st.markdown(
     """
     <style>
-    /* -----------------------------------------------------------
-       0. Override Streamlit's CSS variables that can introduce gray
-       ----------------------------------------------------------- */
-    :root {
-      --text-separator-color: #000000 !important; /* Eliminates gray borders */
-      --block-border-width: 0px !important;
-      --block-border-style: solid !important;
-      --block-border-color: #000000 !important;
-    }
-
     /* ----------------------------------------------------------
-       1. Force black background in high-level HTML containers
+       1. Force black background in all high-level HTML containers
        ---------------------------------------------------------- */
     html, body {
         background-color: #000000 !important;
@@ -43,7 +33,6 @@ st.markdown(
     [data-testid="stHorizontalBlock"] {
         background-color: #000000 !important;
         color: #ffffff !important;
-        border: none !important;
     }
 
     /* ----------------------------------------------------------
@@ -57,22 +46,18 @@ st.markdown(
     }
     [data-testid="stHeader"] {
         background-color: #000000 !important;
-        border: none !important;
     }
     [data-testid="stToolbar"] {
         background-color: #000000 !important;
     }
     footer {
         background-color: #000000 !important;
-        border: none !important;
     }
     section[data-testid="stSidebar"] {
         background-color: #000000 !important;
-        border: none !important;
     }
     [data-testid="stSidebarNav"] {
         background-color: #000000 !important;
-        border: none !important;
     }
 
     /* ----------------------------------------------------------
@@ -91,45 +76,22 @@ st.markdown(
     .stChatContainer {
         background-color: #000000 !important;
     }
-
-    /* 
-       Force each chat message to have no gray border or box-shadow.
-       We use both the data-testid and class selectors, with !important.
-    */
-    [data-testid="stChatMessage"] {
+    .stChatMessage {
         background-color: #1a1a1a !important;
-        border: 2px solid #000000 !important;
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        margin-bottom: 0.5rem !important;
+        /* Add the following line to make borders black instead of gray: */
+        border: 2px solid #000 !important;
     }
-    /* The content region inside the chat bubble */
-    [data-testid="stChatMessageContent"] {
+    .stChatMessageContent {
         background-color: #1a1a1a !important;
-        border: none !important;
-        box-shadow: none !important;
+        color: #ffffff !important;
     }
-    /* This wrapper can also impose borders/shadows */
-    [data-testid="stVerticalBlockBorderWrapper"] {
-        border: none !important;
-        box-shadow: none !important;
-    }
-
-    /* Additional nuke of any leftover borders inside a message */
-    .stChatMessage, .stChatMessage * {
-        border-color: #000000 !important;
-        box-shadow: none !important;
-    }
-
     /* Avatars */
     .stChatMessage > div:first-child {
-        background-color: #000000 !important;
-        border: 2px solid #000000 !important;
-        box-shadow: none !important;
+        background-color: black !important;
+        border: 2px solid black !important;
     }
     .stChatMessage > div:first-child > div {
-        border: 2px solid #000000 !important;
-        box-shadow: none !important;
+        border: 2px solid black !important;
     }
 
     /* ----------------------------------------------------------
@@ -163,7 +125,6 @@ st.markdown(
        ---------------------------------------------------------- */
     .stChatInputContainer {
         background-color: #1a1a1a !important;
-        border: none !important;
     }
     /* The <textarea> for chat */
     textarea {
@@ -178,7 +139,6 @@ st.markdown(
     [data-testid="stChatInput"] {
         color: #ffffff !important;
         background-color: #1a1a1a !important;
-        border: none !important;
     }
     [data-testid="stChatInput"] textarea {
         color: #ffffff !important;
@@ -276,14 +236,19 @@ st.markdown(
     }
     [data-testid="stBottomBlockContainer"] {
         background-color: #000000 !important;
-        border: none !important;
+    }
+    [data-testid="stVerticalBlockBorderWrapper"] {
+        background-color: #000000 !important;
     }
     [data-testid="stVerticalBlock"] {
         background-color: #000000 !important;
-        border: none !important;
-        box-shadow: none !important;
     }
     [data-testid="stElementContainer"] {
+        background-color: #000000 !important;
+    }
+
+    /* Example for any additional st-emotion-cache classes if needed */
+    .st-emotion-cache-128upt6.ekr3hml3 {
         background-color: #000000 !important;
     }
     </style>
