@@ -19,8 +19,18 @@ load_dotenv()
 st.markdown(
     """
     <style>
+    /* -----------------------------------------------------------
+       0. Override Streamlit's CSS variables that can introduce gray
+       ----------------------------------------------------------- */
+    :root {
+      --text-separator-color: #000000 !important; /* Eliminates gray borders */
+      --block-border-width: 0px !important;
+      --block-border-style: solid !important;
+      --block-border-color: #000000 !important;
+    }
+
     /* ----------------------------------------------------------
-       1. Force black background in all high-level HTML containers
+       1. Force black background in high-level HTML containers
        ---------------------------------------------------------- */
     html, body {
         background-color: #000000 !important;
@@ -33,6 +43,7 @@ st.markdown(
     [data-testid="stHorizontalBlock"] {
         background-color: #000000 !important;
         color: #ffffff !important;
+        border: none !important;
     }
 
     /* ----------------------------------------------------------
@@ -46,18 +57,22 @@ st.markdown(
     }
     [data-testid="stHeader"] {
         background-color: #000000 !important;
+        border: none !important;
     }
     [data-testid="stToolbar"] {
         background-color: #000000 !important;
     }
     footer {
         background-color: #000000 !important;
+        border: none !important;
     }
     section[data-testid="stSidebar"] {
         background-color: #000000 !important;
+        border: none !important;
     }
     [data-testid="stSidebarNav"] {
         background-color: #000000 !important;
+        border: none !important;
     }
 
     /* ----------------------------------------------------------
@@ -77,38 +92,44 @@ st.markdown(
         background-color: #000000 !important;
     }
 
-    /* ----------------------------------------------------------
-       Chat Bubble Borders
-       ---------------------------------------------------------- */
-    /* The outer wrapper of each chat message */
-    .stChatMessage {
+    /* 
+       Force each chat message to have no gray border or box-shadow.
+       We use both the data-testid and class selectors, with !important.
+    */
+    [data-testid="stChatMessage"] {
         background-color: #1a1a1a !important;
-        /* Force a black border instead of gray */
         border: 2px solid #000000 !important;
-        box-shadow: none !important;  /* Remove any box-shadow that may appear */
-        border-radius: 0 !important;  /* Remove rounding if Streamlit applies it */
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        margin-bottom: 0.5rem !important;
     }
-
-    /* The actual content region within a chat bubble */
+    /* The content region inside the chat bubble */
     [data-testid="stChatMessageContent"] {
         background-color: #1a1a1a !important;
         border: none !important;
         box-shadow: none !important;
     }
-
-    /* Sometimes Streamlit applies a border via stVerticalBlockBorderWrapper */
+    /* This wrapper can also impose borders/shadows */
     [data-testid="stVerticalBlockBorderWrapper"] {
         border: none !important;
         box-shadow: none !important;
     }
 
+    /* Additional nuke of any leftover borders inside a message */
+    .stChatMessage, .stChatMessage * {
+        border-color: #000000 !important;
+        box-shadow: none !important;
+    }
+
     /* Avatars */
     .stChatMessage > div:first-child {
-        background-color: black !important;
-        border: 2px solid black !important;
+        background-color: #000000 !important;
+        border: 2px solid #000000 !important;
+        box-shadow: none !important;
     }
     .stChatMessage > div:first-child > div {
-        border: 2px solid black !important;
+        border: 2px solid #000000 !important;
+        box-shadow: none !important;
     }
 
     /* ----------------------------------------------------------
@@ -142,6 +163,7 @@ st.markdown(
        ---------------------------------------------------------- */
     .stChatInputContainer {
         background-color: #1a1a1a !important;
+        border: none !important;
     }
     /* The <textarea> for chat */
     textarea {
@@ -156,6 +178,7 @@ st.markdown(
     [data-testid="stChatInput"] {
         color: #ffffff !important;
         background-color: #1a1a1a !important;
+        border: none !important;
     }
     [data-testid="stChatInput"] textarea {
         color: #ffffff !important;
@@ -253,10 +276,11 @@ st.markdown(
     }
     [data-testid="stBottomBlockContainer"] {
         background-color: #000000 !important;
+        border: none !important;
     }
     [data-testid="stVerticalBlock"] {
         background-color: #000000 !important;
-        border: none !important; /* remove any leftover borders */
+        border: none !important;
         box-shadow: none !important;
     }
     [data-testid="stElementContainer"] {
