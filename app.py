@@ -19,78 +19,83 @@ load_dotenv()
 st.markdown(
     """
     <style>
-    /* Main background colors - forcing black everywhere */
+    /* ----------------------------------------------------------
+       1. Force black background in all high-level HTML containers
+       ---------------------------------------------------------- */
+    html, body {
+        background-color: #000000 !important;
+        color: #ffffff !important;
+    }
+    .main,
+    [data-testid="block-container"],
+    [data-testid="stBlock"],
+    [data-testid="stVerticalBlock"],
+    [data-testid="stHorizontalBlock"] {
+        background-color: #000000 !important;
+        color: #ffffff !important;
+    }
+
+    /* ----------------------------------------------------------
+       2. Streamlit's main UI, header, footer, and sidebar
+       ---------------------------------------------------------- */
     .stApp {
         background-color: #000000 !important;
     }
-    
-    .main {
-        background-color: #000000 !important;
-    }
-    
     [data-testid="stAppViewContainer"] {
         background-color: #000000 !important;
     }
-    
     [data-testid="stHeader"] {
         background-color: #000000 !important;
     }
-    
     [data-testid="stToolbar"] {
         background-color: #000000 !important;
     }
-    
-    .stChatFloatingInputContainer {
-        background-color: #000000 !important;
-    }
-    
     footer {
         background-color: #000000 !important;
     }
-    
-    /* Sidebar styling */
     section[data-testid="stSidebar"] {
         background-color: #000000 !important;
     }
-    
     [data-testid="stSidebarNav"] {
         background-color: #000000 !important;
     }
-    
-    /* Font colors */
+
+    /* ----------------------------------------------------------
+       3. Font & Text Colors
+       ---------------------------------------------------------- */
     .stMarkdown, p, span, div {
         color: #ffffff !important;
     }
-    
     h1, h2, h3 {
         color: #ffffff !important;
     }
-    
-    /* Chat container and messages */
+
+    /* ----------------------------------------------------------
+       4. Chat Container & Message Bubbles
+       Matching provided HTML snippet
+       ---------------------------------------------------------- */
     .stChatContainer {
         background-color: #000000 !important;
     }
-    
     .stChatMessage {
         background-color: #1a1a1a !important;
     }
-    
     .stChatMessageContent {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
     }
-    
-    /* Avatar styling with black background and border */
+    /* Avatar styling (black background + border) */
     .stChatMessage > div:first-child {
         background-color: black !important;
         border: 2px solid black !important;
     }
-    
     .stChatMessage > div:first-child > div {
         border: 2px solid black !important;
     }
-    
-    /* Enhanced input field styling with cursor visibility */
+
+    /* ----------------------------------------------------------
+       5. Text Inputs (General)
+       ---------------------------------------------------------- */
     .stTextInput > div > div > input {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
@@ -98,82 +103,104 @@ st.markdown(
         caret-color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
     }
-    
-    /* Style for password input field in sidebar */
     input[type="password"] {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
         caret-color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
-        color: #ffffff !important;
     }
-    
-    /* Focus state for input fields */
     input:focus {
         outline: none !important;
         caret-color: #ffffff !important;
         caret-animation: blink 1s infinite;
     }
-    
-    /* Selection styling for input fields */
     input::selection {
         background-color: rgba(255, 255, 255, 0.2) !important;
         color: #ffffff !important;
     }
-    
-    /* Chat input styling */
-    .stChatInputContainer {
-        background-color: #1a1a1a !important;
+
+    /* ----------------------------------------------------------
+       6. Chat-Specific Input Fields
+       From provided HTML snippet
+       ---------------------------------------------------------- */
+    .stChatFloatingInputContainer {
+        background-color: #000000 !important; /* Input container outer box */
     }
-    
-    /* Specific styling for the chat input textarea */
+    .stChatInputContainer {
+        background-color: #1a1a1a !important; /* Inner container for text area */
+    }
     textarea {
         color: #ffffff !important;
         caret-color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
         opacity: 1 !important;
     }
-    
     .stChatInput {
         color: #ffffff !important;
     }
-    
     [data-testid="stChatInput"] {
         color: #ffffff !important;
+        background-color: #1a1a1a !important;
     }
-    
-    /* Enhanced cursor visibility for chat input */
     [data-testid="stChatInput"] textarea {
         color: #ffffff !important;
+        background-color: #1a1a1a !important;
         caret-color: #ffffff !important;
+        border: 1px solid #333333 !important;
     }
-    
     textarea:focus {
         outline: none !important;
         caret-color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
         caret-animation: blink 1s infinite;
     }
-    
     textarea::selection {
         background-color: rgba(255, 255, 255, 0.2) !important;
         color: #ffffff !important;
     }
-    
+
     /* Cursor blink animation */
     @keyframes blink {
         0% { opacity: 1; }
         50% { opacity: 0; }
         100% { opacity: 1; }
     }
-    
-    /* Button styling */
+
+    /* ----------------------------------------------------------
+       7. Buttons
+       ---------------------------------------------------------- */
     .stButton > button {
         width: 100%;
         background-color: #1a1a1a !important;
         color: #ffffff !important;
         border: 1px solid #333333 !important;
     }
-    
-    /* Status indicator styling */
+
+    /* The form submit button (sidebar "Enter" button) */
+    [data-testid="stFormSubmitButton"] button {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        border: 1px solid #333333 !important;
+        width: 100% !important;
+        font-size: 1rem !important;
+        margin-top: 0.5rem !important;
+
+        /* Ensure it's not disabled by CSS */
+        pointer-events: auto !important;
+        cursor: pointer !important;
+        opacity: 1 !important;
+    }
+
+    /* The chat submit button */
+    [data-testid="stChatInputSubmitButton"] {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+        border: 1px solid #333333 !important;
+    }
+
+    /* ----------------------------------------------------------
+       8. Other UI Elements
+       ---------------------------------------------------------- */
     .api-status {
         margin-top: 10px;
         padding: 10px;
@@ -181,34 +208,49 @@ st.markdown(
         background-color: #1a1a1a !important;
         text-align: center;
     }
-    
-    /* Error message styling */
     .stAlert {
         background-color: #1a1a1a !important;
         color: #ff4444 !important;
     }
-    
-    /* Scrollbar styling */
     ::-webkit-scrollbar {
         background: #000000 !important;
         width: 10px;
     }
-    
     ::-webkit-scrollbar-thumb {
         background: #333333 !important;
         border-radius: 5px;
     }
-    
-    /* Override any remaining white spaces */
     div[data-testid="stDecoration"] {
         background-color: #000000 !important;
     }
-    
     div[data-testid="stStatusWidget"] {
         background-color: #000000 !important;
     }
-    
     iframe {
+        background-color: #000000 !important;
+    }
+
+    /* ----------------------------------------------------------
+       9. Additional Overriding for Bottom Regions
+       ---------------------------------------------------------- */
+    [data-testid="stBottom"] {
+        background-color: #000000 !important;
+    }
+    [data-testid="stBottomBlockContainer"] {
+        background-color: #000000 !important;
+    }
+    [data-testid="stVerticalBlockBorderWrapper"] {
+        background-color: #000000 !important;
+    }
+    [data-testid="stVerticalBlock"] {
+        background-color: #000000 !important;
+    }
+    [data-testid="stElementContainer"] {
+        background-color: #000000 !important;
+    }
+
+    /* Example for any additional st-emotion-cache classes if needed */
+    .st-emotion-cache-128upt6.ekr3hml3 {
         background-color: #000000 !important;
     }
     </style>
