@@ -76,7 +76,7 @@ st.markdown(
     .stChatContainer {
         background-color: #000000 !important;
     }
-    /* Changed these two from #1a1a1a to #000000 */
+    /* Changed from #1a1a1a to #000000 */
     .stChatMessage {
         background-color: #000000 !important;
     }
@@ -122,30 +122,34 @@ st.markdown(
     /* ----------------------------------------------------------
        6. Chat-Specific Input Fields
        ---------------------------------------------------------- */
-    /* Make everything in the chat input container black */
-    .stChatInputContainer,
-    .stChatInputContainer * {
+    /* Make the stChatInput container black. */
+    .stChatInputContainer {
+        background-color: #000000 !important;
+    }
+
+    /* Force all nested divs under stChatInputContainer to black. 
+       This addresses deeper “baseweb” wrappers in both Edge & Chrome. */
+    .stChatInputContainer > div,
+    .stChatInputContainer > div > div,
+    .stChatInputContainer > div > div > div,
+    .stChatInputContainer > div > div > div > div,
+    .stChatInputContainer > div > div > div > div > div {
         background-color: #000000 !important;
         color: #ffffff !important;
     }
-    /* But keep the actual <textarea> area dark gray (#1a1a1a) */
+
+    /* The actual <textarea> at #1a1a1a for contrast. */
     .stChatInputContainer textarea {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
-    }
-    /* Also ensure any baseweb containers are black */
-    .stChatInputContainer div[data-baseweb="textarea"],
-    .stChatInputContainer div[data-baseweb="base-input"] {
-        background-color: #000000 !important;
+        border: 1px solid #333333 !important;
+        caret-color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
     }
 
     [data-testid="stChatInput"] {
         background-color: #000000 !important;
-    }
-    [data-testid="stChatInput"] textarea {
-        background-color: #1a1a1a !important;
-        border: 1px solid #333333 !important;
-        caret-color: #ffffff !important;
+        color: #ffffff !important;
     }
 
     /* ----------------------------------------------------------
