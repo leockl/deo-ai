@@ -250,7 +250,8 @@ st.markdown(
     }
 
     /* Example for any additional st-emotion-cache classes if needed */
-    .st-emotion-cache-128upt6.ekr3hml3 {
+    .stChatInput,
+    .stChatInput * {
         background-color: #000000 !important;
     }
     </style>
