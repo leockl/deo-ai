@@ -122,41 +122,35 @@ st.markdown(
     /* ----------------------------------------------------------
        6. Chat-Specific Input Fields
        ---------------------------------------------------------- */
-    .stChatInputContainer {
-        background-color: #000000 !important;
-    }
-    .stChatInput {
+    /* Make everything in the chat input container black */
+    .stChatInputContainer,
+    .stChatInputContainer * {
         background-color: #000000 !important;
         color: #ffffff !important;
     }
+    /* But keep the actual <textarea> area dark gray (#1a1a1a) */
+    .stChatInputContainer textarea {
+        background-color: #1a1a1a !important;
+        color: #ffffff !important;
+    }
+    /* Also ensure any baseweb containers are black */
+    .stChatInputContainer div[data-baseweb="textarea"],
+    .stChatInputContainer div[data-baseweb="base-input"] {
+        background-color: #000000 !important;
+    }
+
     [data-testid="stChatInput"] {
-        color: #ffffff !important;
         background-color: #000000 !important;
     }
     [data-testid="stChatInput"] textarea {
-        color: #ffffff !important;
         background-color: #1a1a1a !important;
-        caret-color: #ffffff !important;
         border: 1px solid #333333 !important;
-    }
-    textarea {
-        color: #ffffff !important;
         caret-color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-        opacity: 1 !important;
-    }
-    textarea:focus {
-        outline: none !important;
-        caret-color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-        caret-animation: blink 1s infinite;
-    }
-    textarea::selection {
-        background-color: rgba(255, 255, 255, 0.2) !important;
-        color: #ffffff !important;
     }
 
-    /* 7. Buttons */
+    /* ----------------------------------------------------------
+       7. Buttons
+       ---------------------------------------------------------- */
     .stButton > button {
         width: 100%;
         background-color: #1a1a1a !important;
@@ -180,7 +174,9 @@ st.markdown(
         border: 1px solid #333333 !important;
     }
 
-    /* 8. Other UI Elements */
+    /* ----------------------------------------------------------
+       8. Other UI Elements
+       ---------------------------------------------------------- */
     .api-status {
         margin-top: 10px;
         padding: 10px;
@@ -210,7 +206,9 @@ st.markdown(
         background-color: #000000 !important;
     }
 
-    /* 9. Additional Overriding for Bottom Regions */
+    /* ----------------------------------------------------------
+       9. Additional Overriding for Bottom Regions
+       ---------------------------------------------------------- */
     [data-testid="stBottom"] {
         background-color: #000000 !important;
     }
@@ -225,15 +223,6 @@ st.markdown(
     }
     [data-testid="stElementContainer"] {
         background-color: #000000 !important;
-    }
-
-    /* Force all sub-elements of the chat input container to be black. 
-       Then override just the textarea background to #1a1a1a. */
-    .stChatInputContainer * {
-        background-color: #000000 !important;
-    }
-    .stChatInputContainer textarea {
-        background-color: #1a1a1a !important;
     }
 
     /* Cursor blink animation */
