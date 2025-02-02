@@ -249,18 +249,6 @@ st.markdown(
     .st-emotion-cache-128upt6.ekr3hml3 {
         background-color: #000000 !important;
     }
-
-    /* ----------------------------------------------------------
-       10. Force black in Edge & Chrome on the bottom chat region
-       ---------------------------------------------------------- */
-    [data-testid="stChatInput"] div,
-    [data-testid="stChatInput"] span,
-    [data-testid="stChatInput"] button,
-    [data-testid="stChatInput"] textarea {
-        background-color: #000000 !important;
-        color: #ffffff !important;
-    }
-
     </style>
     """,
     unsafe_allow_html=True
