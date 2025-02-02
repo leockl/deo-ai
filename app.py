@@ -122,24 +122,13 @@ st.markdown(
     /* ----------------------------------------------------------
        6. Chat-Specific Input Fields
        ---------------------------------------------------------- */
-    /* Set the main chat input container to black rather than grey */
+    /* Force black background behind the entire chat input container */
     .stChatInputContainer {
         background-color: #000000 !important;
     }
-
     /* Also ensure the stChatInput block is black */
     .stChatInput {
         background-color: #000000 !important;
-    }
-
-    /* The <textarea> for chat remains #1a1a1a */
-    textarea {
-        color: #ffffff !important;
-        caret-color: #ffffff !important;
-        -webkit-text-fill-color: #ffffff !important;
-        opacity: 1 !important;
-    }
-    .stChatInput {
         color: #ffffff !important;
     }
     [data-testid="stChatInput"] {
@@ -152,6 +141,12 @@ st.markdown(
         caret-color: #ffffff !important;
         border: 1px solid #333333 !important;
     }
+    textarea {
+        color: #ffffff !important;
+        caret-color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        opacity: 1 !important;
+    }
     textarea:focus {
         outline: none !important;
         caret-color: #ffffff !important;
@@ -161,6 +156,17 @@ st.markdown(
     textarea::selection {
         background-color: rgba(255, 255, 255, 0.2) !important;
         color: #ffffff !important;
+    }
+
+    /* Additional fixes for Microsoft Edge:
+       Force the baseweb containers to be black as well */
+    .stChatInputContainer div[data-baseweb="textarea"],
+    .stChatInputContainer div[data-baseweb="base-input"] {
+        background-color: #000000 !important;
+    }
+    /* The class used around the textarea in Edge */
+    .st-emotion-cache-s1k4sy.e4p0gdf1 {
+        background-color: #000000 !important;
     }
 
     /* Cursor blink animation */
@@ -179,8 +185,6 @@ st.markdown(
         color: #ffffff !important;
         border: 1px solid #333333 !important;
     }
-
-    /* The form submit button (sidebar "Enter" button) */
     [data-testid="stFormSubmitButton"] button {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
@@ -194,8 +198,6 @@ st.markdown(
         cursor: pointer !important;
         opacity: 1 !important;
     }
-
-    /* The chat submit button */
     [data-testid="stChatInputSubmitButton"] {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
