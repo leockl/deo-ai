@@ -171,6 +171,7 @@ st.markdown(
         color: #ffffff !important;
         border: 1px solid #333333 !important;
     }
+
     [data-testid="stFormSubmitButton"] button {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
@@ -182,6 +183,7 @@ st.markdown(
         cursor: pointer !important;
         opacity: 1 !important;
     }
+
     [data-testid="stChatInputSubmitButton"] {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
@@ -243,16 +245,17 @@ st.markdown(
     }
 
     /* ----------------------------------------------------------
-       10. Force black for the entire chat input region in BOTH
-           Microsoft Edge and Chrome, including sub-elements
+       10. Target data-baseweb attributes for chat input
+           (override Edge's grey with black)
        ---------------------------------------------------------- */
-    .stChatInputContainer *,
-    [data-testid="stChatInput"] * {
+    [data-baseweb="textarea"],
+    [data-baseweb="base-input"],
+    [data-baseweb="textarea"] * ,
+    [data-baseweb="base-input"] * {
         background-color: #000000 !important;
         color: #ffffff !important;
         border-color: #000000 !important;
         box-shadow: none !important;
-        outline: none !important;
     }
 
     </style>
