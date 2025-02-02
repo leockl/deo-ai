@@ -76,7 +76,7 @@ st.markdown(
     .stChatContainer {
         background-color: #000000 !important;
     }
-    /* Changed from #1a1a1a to #000000 */
+    /* Changed these two from #1a1a1a to #000000 */
     .stChatMessage {
         background-color: #000000 !important;
     }
@@ -122,34 +122,45 @@ st.markdown(
     /* ----------------------------------------------------------
        6. Chat-Specific Input Fields
        ---------------------------------------------------------- */
-    /* Make the stChatInput container black. */
     .stChatInputContainer {
-        background-color: #000000 !important;
-    }
-
-    /* Force all nested divs under stChatInputContainer to black. 
-       This addresses deeper “baseweb” wrappers in both Edge & Chrome. */
-    .stChatInputContainer > div,
-    .stChatInputContainer > div > div,
-    .stChatInputContainer > div > div > div,
-    .stChatInputContainer > div > div > div > div,
-    .stChatInputContainer > div > div > div > div > div {
-        background-color: #000000 !important;
-        color: #ffffff !important;
-    }
-
-    /* The actual <textarea> at #1a1a1a for contrast. */
-    .stChatInputContainer textarea {
         background-color: #1a1a1a !important;
+    }
+    /* The <textarea> for chat */
+    textarea {
         color: #ffffff !important;
-        border: 1px solid #333333 !important;
         caret-color: #ffffff !important;
         -webkit-text-fill-color: #ffffff !important;
+        opacity: 1 !important;
+    }
+    .stChatInput {
+        color: #ffffff !important;
+    }
+    [data-testid="stChatInput"] {
+        color: #ffffff !important;
+        background-color: #1a1a1a !important;
+    }
+    [data-testid="stChatInput"] textarea {
+        color: #ffffff !important;
+        background-color: #1a1a1a !important;
+        caret-color: #ffffff !important;
+        border: 1px solid #333333 !important;
+    }
+    textarea:focus {
+        outline: none !important;
+        caret-color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        caret-animation: blink 1s infinite;
+    }
+    textarea::selection {
+        background-color: rgba(255, 255, 255, 0.2) !important;
+        color: #ffffff !important;
     }
 
-    [data-testid="stChatInput"] {
-        background-color: #000000 !important;
-        color: #ffffff !important;
+    /* Cursor blink animation */
+    @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: 0; }
+        100% { opacity: 1; }
     }
 
     /* ----------------------------------------------------------
@@ -161,6 +172,8 @@ st.markdown(
         color: #ffffff !important;
         border: 1px solid #333333 !important;
     }
+
+    /* The form submit button (sidebar "Enter" button) */
     [data-testid="stFormSubmitButton"] button {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
@@ -168,10 +181,14 @@ st.markdown(
         width: 100% !important;
         font-size: 1rem !important;
         margin-top: 0.5rem !important;
+
+        /* Ensure it's not disabled by CSS */
         pointer-events: auto !important;
         cursor: pointer !important;
         opacity: 1 !important;
     }
+
+    /* The chat submit button */
     [data-testid="stChatInputSubmitButton"] {
         background-color: #1a1a1a !important;
         color: #ffffff !important;
@@ -229,11 +246,9 @@ st.markdown(
         background-color: #000000 !important;
     }
 
-    /* Cursor blink animation */
-    @keyframes blink {
-        0% { opacity: 1; }
-        50% { opacity: 0; }
-        100% { opacity: 1; }
+    /* Example for any additional st-emotion-cache classes if needed */
+    .st-emotion-cache-128upt6.ekr3hml3 {
+        background-color: #000000 !important;
     }
     </style>
     """,
