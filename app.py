@@ -122,18 +122,16 @@ st.markdown(
     /* ----------------------------------------------------------
        6. Chat-Specific Input Fields
        ---------------------------------------------------------- */
-    /* Force black background behind the entire chat input container */
     .stChatInputContainer {
         background-color: #000000 !important;
     }
-    /* Also ensure the stChatInput block is black */
     .stChatInput {
         background-color: #000000 !important;
         color: #ffffff !important;
     }
     [data-testid="stChatInput"] {
         color: #ffffff !important;
-        background-color: #000000 !important; /* override to black */
+        background-color: #000000 !important;
     }
     [data-testid="stChatInput"] textarea {
         color: #ffffff !important;
@@ -158,27 +156,7 @@ st.markdown(
         color: #ffffff !important;
     }
 
-    /* Additional fixes for Microsoft Edge:
-       Force the baseweb containers to be black as well */
-    .stChatInputContainer div[data-baseweb="textarea"],
-    .stChatInputContainer div[data-baseweb="base-input"] {
-        background-color: #000000 !important;
-    }
-    /* The class used around the textarea in Edge */
-    .st-emotion-cache-s1k4sy.e4p0gdf1 {
-        background-color: #000000 !important;
-    }
-
-    /* Cursor blink animation */
-    @keyframes blink {
-        0% { opacity: 1; }
-        50% { opacity: 0; }
-        100% { opacity: 1; }
-    }
-
-    /* ----------------------------------------------------------
-       7. Buttons
-       ---------------------------------------------------------- */
+    /* 7. Buttons */
     .stButton > button {
         width: 100%;
         background-color: #1a1a1a !important;
@@ -192,8 +170,6 @@ st.markdown(
         width: 100% !important;
         font-size: 1rem !important;
         margin-top: 0.5rem !important;
-
-        /* Ensure it's not disabled by CSS */
         pointer-events: auto !important;
         cursor: pointer !important;
         opacity: 1 !important;
@@ -204,9 +180,7 @@ st.markdown(
         border: 1px solid #333333 !important;
     }
 
-    /* ----------------------------------------------------------
-       8. Other UI Elements
-       ---------------------------------------------------------- */
+    /* 8. Other UI Elements */
     .api-status {
         margin-top: 10px;
         padding: 10px;
@@ -236,9 +210,7 @@ st.markdown(
         background-color: #000000 !important;
     }
 
-    /* ----------------------------------------------------------
-       9. Additional Overriding for Bottom Regions
-       ---------------------------------------------------------- */
+    /* 9. Additional Overriding for Bottom Regions */
     [data-testid="stBottom"] {
         background-color: #000000 !important;
     }
@@ -255,9 +227,20 @@ st.markdown(
         background-color: #000000 !important;
     }
 
-    /* Example for any additional st-emotion-cache classes if needed */
-    .st-emotion-cache-128upt6.ekr3hml3 {
+    /* Force all sub-elements of the chat input container to be black. 
+       Then override just the textarea background to #1a1a1a. */
+    .stChatInputContainer * {
         background-color: #000000 !important;
+    }
+    .stChatInputContainer textarea {
+        background-color: #1a1a1a !important;
+    }
+
+    /* Cursor blink animation */
+    @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: 0; }
+        100% { opacity: 1; }
     }
     </style>
     """,
