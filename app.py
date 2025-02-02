@@ -250,17 +250,14 @@ st.markdown(
         background-color: #000000 !important;
     }
 
-    /* ----------------------------------------------------------
-       10. Force black in Edge & Chrome on the bottom chat region
-       ---------------------------------------------------------- */
-    [data-testid="stChatInput"] div,
-    [data-testid="stChatInput"] span,
-    [data-testid="stChatInput"] button,
-    [data-testid="stChatInput"] textarea {
+    /* ---------------------------------------------------------
+       10. Force bottom-right chat area to black in both Edge
+           and Chrome (including sub-elements)
+       --------------------------------------------------------- */
+    [data-testid="stBottomBlockContainer"] * {
         background-color: #000000 !important;
         color: #ffffff !important;
     }
-
     </style>
     """,
     unsafe_allow_html=True
