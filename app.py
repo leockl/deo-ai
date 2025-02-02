@@ -76,11 +76,12 @@ st.markdown(
     .stChatContainer {
         background-color: #000000 !important;
     }
+    /* Changed these two from #1a1a1a to #000000 */
     .stChatMessage {
-        background-color: #1a1a1a !important;
+        background-color: #000000 !important;
     }
     .stChatMessageContent {
-        background-color: #1a1a1a !important;
+        background-color: #000000 !important;
         color: #ffffff !important;
     }
     /* Avatars */
