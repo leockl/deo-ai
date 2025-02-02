@@ -122,10 +122,17 @@ st.markdown(
     /* ----------------------------------------------------------
        6. Chat-Specific Input Fields
        ---------------------------------------------------------- */
+    /* Set the main chat input container to black rather than grey */
     .stChatInputContainer {
-        background-color: #1a1a1a !important;
+        background-color: #000000 !important;
     }
-    /* The <textarea> for chat */
+
+    /* Also ensure the stChatInput block is black */
+    .stChatInput {
+        background-color: #000000 !important;
+    }
+
+    /* The <textarea> for chat remains #1a1a1a */
     textarea {
         color: #ffffff !important;
         caret-color: #ffffff !important;
@@ -137,7 +144,7 @@ st.markdown(
     }
     [data-testid="stChatInput"] {
         color: #ffffff !important;
-        background-color: #1a1a1a !important;
+        background-color: #000000 !important; /* override to black */
     }
     [data-testid="stChatInput"] textarea {
         color: #ffffff !important;
