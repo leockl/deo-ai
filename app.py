@@ -72,7 +72,6 @@ st.markdown(
 
     /* ----------------------------------------------------------
        4. Chat Container & Message Bubbles
-       Matching provided HTML snippet
        ---------------------------------------------------------- */
     .stChatContainer {
         background-color: #000000 !important;
@@ -84,7 +83,7 @@ st.markdown(
         background-color: #1a1a1a !important;
         color: #ffffff !important;
     }
-    /* Avatar styling (black background + border) */
+    /* Avatars */
     .stChatMessage > div:first-child {
         background-color: black !important;
         border: 2px solid black !important;
@@ -121,14 +120,11 @@ st.markdown(
 
     /* ----------------------------------------------------------
        6. Chat-Specific Input Fields
-       From provided HTML snippet
        ---------------------------------------------------------- */
-    .stChatFloatingInputContainer {
-        background-color: #000000 !important; /* Input container outer box */
-    }
     .stChatInputContainer {
-        background-color: #1a1a1a !important; /* Inner container for text area */
+        background-color: #1a1a1a !important;
     }
+    /* The <textarea> for chat */
     textarea {
         color: #ffffff !important;
         caret-color: #ffffff !important;
@@ -250,10 +246,21 @@ st.markdown(
     }
 
     /* Example for any additional st-emotion-cache classes if needed */
-    .stChatInput,
-    .stChatInput * {
+    .st-emotion-cache-128upt6.ekr3hml3 {
         background-color: #000000 !important;
     }
+
+    /* ----------------------------------------------------------
+       10. Force black in Edge & Chrome on the bottom chat region
+       ---------------------------------------------------------- */
+    [data-testid="stChatInput"] div,
+    [data-testid="stChatInput"] span,
+    [data-testid="stChatInput"] button,
+    [data-testid="stChatInput"] textarea {
+        background-color: #000000 !important;
+        color: #ffffff !important;
+    }
+
     </style>
     """,
     unsafe_allow_html=True
