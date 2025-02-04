@@ -256,13 +256,13 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Initialize session state for chat history, API key status, and model selection
+# Initialize session state for chat history, API key status and model choice
 if 'messages' not in st.session_state:
     st.session_state.messages = []
 if 'api_key_active' not in st.session_state:
     st.session_state.api_key_active = False
 if 'selected_model' not in st.session_state:
-    st.session_state.selected_model = "gpt-4o-mini"
+    st.session_state.selected_model = 'GPT-4o-mini'
 
 def load_openai_key():
     """Load OpenAI API key from environment variable or user input"""
@@ -270,12 +270,6 @@ def load_openai_key():
         return os.environ["OPENAI_API_KEY"]
     except KeyError:
         return None
-
-def update_model_selection():
-    """Update the selected model in session state"""
-    st.session_state.selected_model = st.session_state.model_selection
-    # Reset API key status when switching models
-    st.session_state.api_key_active = False
 
 def initialize_streamlit():
     """Initialize Streamlit app with title and sidebar"""
@@ -290,19 +284,17 @@ def initialize_streamlit():
     # Sidebar title and Model Selection
     st.sidebar.title("🤖 Deo AI")
     
-    # Add model selection dropdown
-    st.sidebar.selectbox(
+    # Add model selection radio button
+    st.session_state.selected_model = st.sidebar.radio(
         "Select AI Model:",
-        ("GPT-4", "DeepSeek-R1"),
-        key="model_selection",
-        on_change=update_model_selection
+        ('GPT-4o-mini', 'DeepSeek-R1')
     )
     
-    # Only show API key input if gpt-4o-mini is selected
-    if st.session_state.selected_model == "gpt-4o-mini":
+    # Only show API key input if GPT-4o-mini is selected
+    if st.session_state.selected_model == 'GPT-4o-mini':
         default_key = load_openai_key()
         
-        # Create a form in the sidebar for OpenAI API key
+        # Create a form in the sidebar
         with st.sidebar.form(key='api_key_form'):
             user_api_key = st.text_input(
                 "Enter your OpenAI API key (if monthly free credits are exhausted):",
@@ -328,10 +320,10 @@ def initialize_streamlit():
         
         return user_api_key if user_api_key and st.session_state.api_key_active else default_key
     else:
-        # For DeepSeek-R1, use Azure credentials
+        st.session_state.api_key_active = False
         return None
 
-# This helper function escapes $ signs so they are not interpreted as LaTeX
+# This helper function escapes $ signs so they are not interpreted as LaTeX.
 def sanitize_dollar_signs(text: str) -> str:
     """
     Convert every raw '$' into HTML entity '&#36;', so it displays
@@ -687,7 +679,7 @@ def dao_proposal_optimizer(dao_name: str, initial_proposal: str, num_proposals: 
         raise ToolException(str(te))
     except Exception as e:
         raise ToolException(f"Error in proposal optimization process: {str(e)}")
-
+    
 def convert_messages(messages):
     """
     Convert dictionary-based messages to LangChain message objects.
@@ -711,8 +703,8 @@ def convert_messages(messages):
             
     return converted_messages
 
-def create_gpt4omini_completion(api_key, user_prompt, message_placeholder):
-    """Create streaming chat completion using OpenAI gpt-4o-mini"""
+def create_chat_completion_gpt4omini(api_key, user_prompt, message_placeholder):
+    """Create streaming chat completion using OpenAI API"""
     try:
         client = OpenAI(api_key=api_key)
         
@@ -731,9 +723,14 @@ def create_gpt4omini_completion(api_key, user_prompt, message_placeholder):
             }
         ]
         
-        # Add previous messages and current prompt
+        # Add previous messages
         messages.extend(st.session_state.messages)
-        messages.append({"role": "user", "content": user_prompt})
+        
+        # Add current user prompt
+        messages.append({
+            "role": "user",
+            "content": user_prompt
+        })
 
         converted_messages = convert_messages(messages)
         
@@ -745,23 +742,28 @@ def create_gpt4omini_completion(api_key, user_prompt, message_placeholder):
             response = agent_executor.invoke({"messages": converted_messages})
 
             last_response = response["messages"][-1].content
-            
-            # Process response (your existing response processing code remains the same)
+        
+            # If hidden analysis is present, separate from the final output
             if "DAO_ANALYSIS:" in last_response and "END_ANALYSIS" in last_response:
+                # Extract the analysis
                 analysis_part = last_response.split("DAO_ANALYSIS:")[1].split("END_ANALYSIS")[0].strip()
+                # Append hidden system message with the analysis
                 st.session_state.messages.append({
                     "role": "system", 
                     "content": analysis_part
                 })
                 
+                # If there's an optimized proposal part, parse it out
                 if "OPTIMIZED_PROPOSAL:" in last_response:
+                    # Show only the optimized proposal portion to user
                     last_response = last_response.split("OPTIMIZED_PROPOSAL:")[1].strip()
                 else:
+                    # Fallback if something unexpected
                     last_response = "No optimized proposal found."
 
+            # Here we escape dollar signs so they don't get interpreted as LaTeX.
             safe_last_response = sanitize_dollar_signs(last_response)
             
-            # Stream the response
             accumulated_response = ""
             for char in safe_last_response:
                 accumulated_response += char
@@ -778,7 +780,7 @@ def create_gpt4omini_completion(api_key, user_prompt, message_placeholder):
         else:
             return None, f"An error occurred: {str(e)}"
 
-def create_deepseek_completion(user_prompt, message_placeholder):
+def create_chat_completion_deepseek(user_prompt, message_placeholder):
     """Create streaming chat completion using DeepSeek-R1"""
     try:
         client = AzureOpenAI(
@@ -827,26 +829,15 @@ def create_deepseek_completion(user_prompt, message_placeholder):
     except Exception as e:
         return None, f"An error occurred with DeepSeek-R1: {str(e)}"
 
-def create_chat_completion(api_key, user_prompt, message_placeholder):
-    """Create streaming chat completion using selected AI model"""
-    try:
-        if st.session_state.selected_model == "gpt-4o-mini":
-            return create_gpt4omini_completion(api_key, user_prompt, message_placeholder)
-        else:
-            return create_deepseek_completion(user_prompt, message_placeholder)
-    except Exception as e:
-        return None, f"An error occurred: {str(e)}"
-
 def main():
     api_key = initialize_streamlit()
     
-    # Initialize session state
     if 'messages' not in st.session_state:
         st.session_state.messages = []
     if 'dao_analysis' not in st.session_state:
         st.session_state.dao_analysis = None
     
-    # Display chat history
+    # Display chat history with custom avatars
     for message in st.session_state.messages:
         if message["role"] == "user":
             with st.chat_message("user", avatar="🦖"):
@@ -857,25 +848,28 @@ def main():
                 display_text = sanitize_dollar_signs(message["content"])
                 st.markdown(display_text)
         else:
-            # Skip system messages
+            # Skip system messages in the UI
             pass
     
     if prompt := st.chat_input("Type your message here..."):
-        # For gpt-4o-mini, check API key
-        if st.session_state.selected_model == "gpt-4o-mini" and not api_key:
-            st.error("Please provide an OpenAI API key in the sidebar to use Deo AI.")
+        if st.session_state.selected_model == 'GPT-4o-mini' and not api_key:
+            st.error("Please provide an OpenAI API key in the sidebar to use DEO AI.")
             return
         
-        # Display user message
+        # Display user message with custom avatars
         with st.chat_message("user", avatar="🦖"):
             safe_prompt = sanitize_dollar_signs(prompt)
             st.markdown(safe_prompt)
         st.session_state.messages.append({"role": "user", "content": prompt})
         
-        # Display assistant message
+        # Display assistant message with custom avatars
         with st.chat_message("assistant", avatar="🤖"):
             message_placeholder = st.empty()
-            response, error = create_chat_completion(api_key, prompt, message_placeholder)
+            
+            if st.session_state.selected_model == 'GPT-4o-mini':
+                response, error = create_chat_completion_gpt4omini(api_key, prompt, message_placeholder)
+            else:  # DeepSeek-R1
+                response, error = create_chat_completion_deepseek(prompt, message_placeholder)
             
             if error:
                 if "Monthly API credits exhausted" in error:
@@ -883,7 +877,7 @@ def main():
                 else:
                     st.error(error)
             else:
-                # Store the response
+                # Store the response in chat history
                 st.session_state.messages.append({"role": "assistant", "content": response})
 
 if __name__ == "__main__":
