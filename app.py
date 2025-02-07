@@ -1,6 +1,5 @@
 import streamlit as st
 from openai import OpenAI
-from openai import AzureOpenAI
 from dotenv import load_dotenv
 import os
 import requests
@@ -256,13 +255,11 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Initialize session state for chat history, API key status and model choice
+# Initialize session state for chat history and API key status
 if 'messages' not in st.session_state:
     st.session_state.messages = []
 if 'api_key_active' not in st.session_state:
     st.session_state.api_key_active = False
-if 'selected_model' not in st.session_state:
-    st.session_state.selected_model = 'GPT-4o-mini'
 
 def load_openai_key():
     """Load OpenAI API key from environment variable or user input"""
@@ -281,47 +278,36 @@ def initialize_streamlit():
     st.write("2. The proposal you want to optimize (I support proposals in 50+ languages and returns the optimized proposal to you in English).")
     st.write("3. The number of recent proposals to analyze for this DAO (If you are using our provided OpenAI API key, you can analyze up to 50 recent proposals. If you are using your OpenAI API key, if 50 proposals returns an error, then analyze up to 20 to 25 recent proposals. This is due to token rate limits set by OpenAI depending on which Tier level your OpenAI account is on).")
 
-    # Sidebar title and Model Selection
+    # Sidebar title and API Key Management
     st.sidebar.title("🤖 Deo AI")
     
-    # Add model selection radio button
-    st.session_state.selected_model = st.sidebar.radio(
-        "Select AI Model:",
-        ('GPT-4o-mini', 'DeepSeek-R1')
-    )
+    default_key = load_openai_key()
     
-    # Only show API key input if GPT-4o-mini is selected
-    if st.session_state.selected_model == 'GPT-4o-mini':
-        default_key = load_openai_key()
+    # Create a form in the sidebar
+    with st.sidebar.form(key='api_key_form'):
+        user_api_key = st.text_input(
+            "Enter your OpenAI API key (if monthly free credits are exhausted):",
+            type="password"
+        )
+        submit_button = st.form_submit_button("Enter")
         
-        # Create a form in the sidebar
-        with st.sidebar.form(key='api_key_form'):
-            user_api_key = st.text_input(
-                "Enter your OpenAI API key (if monthly free credits are exhausted):",
-                type="password"
-            )
-            submit_button = st.form_submit_button("Enter")
-            
-            if submit_button and user_api_key:
-                st.session_state.api_key_active = True
-            elif submit_button:
-                st.session_state.api_key_active = False
-        
-        # API Key status indicator (outside the form)
-        if st.session_state.api_key_active:
-            st.sidebar.markdown(
-                """
-                <div class='api-status' style='color: #00ff00;'>
-                    ✓ Custom API key active
-                </div>
-                """, 
-                unsafe_allow_html=True
-            )
-        
-        return user_api_key if user_api_key and st.session_state.api_key_active else default_key
-    else:
-        st.session_state.api_key_active = False
-        return None
+        if submit_button and user_api_key:
+            st.session_state.api_key_active = True
+        elif submit_button:
+            st.session_state.api_key_active = False
+    
+    # API Key status indicator (outside the form)
+    if st.session_state.api_key_active:
+        st.sidebar.markdown(
+            """
+            <div class='api-status' style='color: #00ff00;'>
+                ✓ Custom API key active
+            </div>
+            """, 
+            unsafe_allow_html=True
+        )
+    
+    return user_api_key if user_api_key and st.session_state.api_key_active else default_key
 
 # This helper function escapes $ signs so they are not interpreted as LaTeX.
 def sanitize_dollar_signs(text: str) -> str:
@@ -349,7 +335,7 @@ def dao_proposal_optimizer(dao_name: str, initial_proposal: str, num_proposals: 
     Raises:
         ToolException: If DAO is not found or other errors occur
     """
-    
+
     # Internal function: Get Space ID by fuzzy matching DAO name
     def get_space_id() -> str:
         url = "https://hub.snapshot.org/graphql"
@@ -537,11 +523,9 @@ def dao_proposal_optimizer(dao_name: str, initial_proposal: str, num_proposals: 
 
     # Internal function: Analyze DAO data from Snapshot
     def analyze_dao_data(dao_data: Dict[str, Any]) -> str:
-        try:
-            if not os.getenv("OPENAI_API_KEY"):
-                raise ToolException("OpenAI API key not found in environment variables")
-                
-            client = OpenAI()
+        try:                
+            api_key = api_key_to_use
+            client = OpenAI(api_key=api_key)
             
             space_info = json.dumps(dao_data["space"])
             proposals_info = json.dumps(dao_data["proposals"])
@@ -614,7 +598,8 @@ def dao_proposal_optimizer(dao_name: str, initial_proposal: str, num_proposals: 
     # Internal function: Optimize proposal
     def optimize_proposal(english_proposal: str, dao_data_analysis: str) -> str:
         try:
-            client = OpenAI()
+            api_key = api_key_to_use
+            client = OpenAI(api_key=api_key)
             
             optimize_prompt = f"""
             As a DAO governance proposal optimization expert, optimize the initial proposal below based on the DAO data analysis obtained from the DAO platform Snapshot to obtain a higher passing rate.
@@ -652,7 +637,8 @@ def dao_proposal_optimizer(dao_name: str, initial_proposal: str, num_proposals: 
         dao_data = get_dao_data(space_id)
         dao_analysis = analyze_dao_data(dao_data)
         
-        client = OpenAI()
+        api_key = api_key_to_use
+        client = OpenAI(api_key=api_key)
         translation_prompt = f"""
         Detect the language of this text and if it's not English, translate it to English. 
         If this text is in English, then output the exact same text word for word:
@@ -679,7 +665,7 @@ def dao_proposal_optimizer(dao_name: str, initial_proposal: str, num_proposals: 
         raise ToolException(str(te))
     except Exception as e:
         raise ToolException(f"Error in proposal optimization process: {str(e)}")
-    
+
 def convert_messages(messages):
     """
     Convert dictionary-based messages to LangChain message objects.
@@ -703,11 +689,9 @@ def convert_messages(messages):
             
     return converted_messages
 
-def create_chat_completion_gpt4omini(api_key, user_prompt, message_placeholder):
+def create_chat_completion(api_key, user_prompt, message_placeholder):
     """Create streaming chat completion using OpenAI API"""
-    try:
-        client = OpenAI(api_key=api_key)
-        
+    try:        
         messages = [
             {
                 "role": "system",
@@ -780,57 +764,10 @@ def create_chat_completion_gpt4omini(api_key, user_prompt, message_placeholder):
         else:
             return None, f"An error occurred: {str(e)}"
 
-def create_chat_completion_deepseek(user_prompt, message_placeholder):
-    """Create streaming chat completion using DeepSeek-R1"""
-    try:
-        client = AzureOpenAI(
-            azure_endpoint=os.environ["AZUREAI_ENDPOINT"],
-            api_key=os.environ["AZUREAI_ENDPOINT_KEY"],
-            api_version="2024-05-01-preview",
-        )
-
-        messages = [
-            {
-                "role": "system",
-                "content": (
-                    "You are a helpful assistant who provides responses to user questions based on the context in "
-                    "cryptocurrency, blockchain and web3 only."
-                )
-            }
-        ]
-        
-        # Add previous messages and current prompt
-        messages.extend(st.session_state.messages)
-        messages.append({"role": "user", "content": user_prompt})
-
-        with st.spinner('Thinking...'):
-            response = client.chat.completions.create(
-                model="DeepSeek-R1",
-                messages=messages
-            )
-
-            # Clean response by removing think tags
-            last_response = re.sub(r'<think>.*?</think>', '', 
-                                 response.choices[0].message.content, 
-                                 flags=re.DOTALL).strip()
-
-            safe_last_response = sanitize_dollar_signs(last_response)
-            
-            # Stream the response
-            accumulated_response = ""
-            for char in safe_last_response:
-                accumulated_response += char
-                message_placeholder.markdown(sanitize_dollar_signs(accumulated_response) + "▌")
-
-            message_placeholder.markdown(sanitize_dollar_signs(safe_last_response))
-
-            return safe_last_response, None
-
-    except Exception as e:
-        return None, f"An error occurred with DeepSeek-R1: {str(e)}"
+api_key_to_use = initialize_streamlit()
 
 def main():
-    api_key = initialize_streamlit()
+    api_key = api_key_to_use
     
     if 'messages' not in st.session_state:
         st.session_state.messages = []
@@ -841,6 +778,7 @@ def main():
     for message in st.session_state.messages:
         if message["role"] == "user":
             with st.chat_message("user", avatar="🦖"):
+                # Escape $ before displaying user messages
                 display_text = sanitize_dollar_signs(message["content"])
                 st.markdown(display_text)
         elif message["role"] == "assistant":
@@ -852,8 +790,8 @@ def main():
             pass
     
     if prompt := st.chat_input("Type your message here..."):
-        if st.session_state.selected_model == 'GPT-4o-mini' and not api_key:
-            st.error("Please provide an OpenAI API key in the sidebar to use DEO AI.")
+        if not api_key:
+            st.error("Please provide an OpenAI API key in the sidebar to use Deo AI.")
             return
         
         # Display user message with custom avatars
@@ -865,11 +803,7 @@ def main():
         # Display assistant message with custom avatars
         with st.chat_message("assistant", avatar="🤖"):
             message_placeholder = st.empty()
-            
-            if st.session_state.selected_model == 'GPT-4o-mini':
-                response, error = create_chat_completion_gpt4omini(api_key, prompt, message_placeholder)
-            else:  # DeepSeek-R1
-                response, error = create_chat_completion_deepseek(prompt, message_placeholder)
+            response, error = create_chat_completion(api_key, prompt, message_placeholder)
             
             if error:
                 if "Monthly API credits exhausted" in error:
